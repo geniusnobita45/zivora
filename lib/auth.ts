@@ -1,24 +1,25 @@
-import { createHmac, timingSafeEqual } from "node:crypto";
+﻿import "server-only";
+
 import { cookies } from "next/headers";
+import { ConfigurationError } from "@/lib/errors";
+import { verifyPasswordHash } from "@/lib/password";
+import { createAdminSessionToken, SESSION_COOKIE, SESSION_MAX_AGE_SECONDS, verifyAdminSessionToken } from "@/lib/session";
 
-export const SESSION_COOKIE = "zivora_admin";
+export { SESSION_COOKIE, SESSION_MAX_AGE_SECONDS };
 
-function secret() {
-  return process.env.SESSION_SECRET || "development-only-change-me";
+export async function createAdminSession() {
+  return createAdminSessionToken();
 }
 
-export function sessionToken() {
-  return createHmac("sha256", secret()).update("zivora-admin-session").digest("hex");
-}
-
-export function validPassword(value: string) {
-  const expected = process.env.ADMIN_PASSWORD || "change-this-password";
-  const a = Buffer.from(value);
-  const b = Buffer.from(expected);
-  return a.length === b.length && timingSafeEqual(a, b);
+export async function validPassword(value: string) {
+  const expectedHash = process.env.ADMIN_PASSWORD_HASH;
+  if (!expectedHash) {
+    throw new ConfigurationError("ADMIN_PASSWORD_HASH is required.");
+  }
+  return verifyPasswordHash(value, expectedHash);
 }
 
 export async function isAdmin() {
   const store = await cookies();
-  return store.get(SESSION_COOKIE)?.value === sessionToken();
+  return verifyAdminSessionToken(store.get(SESSION_COOKIE)?.value);
 }

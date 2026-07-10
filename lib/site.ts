@@ -127,7 +127,7 @@ export const clientProfileSlots = [
 export const ownerProfile = {
   name: "Aryan Sharma",
   role: "Owner of Zivora · AI Automation Engineer",
-  portfolioUrl: "https://portfolio-backend-7kau.onrender.com/",
+  portfolioUrl: "https://zivoraai.co.in/#owner",
   summary: "Aryan builds AI-powered products, automation systems, machine-learning workflows, and premium full-stack experiences. Zivora carries that same builder mindset into client work: intelligent systems, clean execution, and digital products made to scale.",
   highlights: ["AI automation engineer", "Full-stack product builder", "Generative AI and workflow systems", "Premium web experiences"],
   stats: [

@@ -639,6 +639,7 @@ function Industries() {
 function Contact() {
   const [state, setState] = useState<"idle" | "sending" | "success" | "error">("idle");
   const [error, setError] = useState("");
+  const [formStartedAt, setFormStartedAt] = useState(() => Date.now());
 
   async function submit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -694,7 +695,7 @@ function Contact() {
               <span><CircleCheck size={29} /></span>
               <h3>We got your brief.</h3>
               <p>Our team is reviewing your project. Expect a reply with a clear next step within 24 hours — no generic sales pitch, we promise.</p>
-              <button className="button button-ghost" onClick={() => setState("idle")}>Send another brief</button>
+              <button className="button button-ghost" onClick={() => { setState("idle"); setFormStartedAt(Date.now()); }}>Send another brief</button>
             </div>
           ) : (
             <form onSubmit={submit}>
@@ -723,15 +724,16 @@ function Contact() {
                   <span>Budget range</span>
                   <select name="budget" defaultValue="">
                     <option value="">Select a range</option>
-                    <option>?50K – ?1L</option>
-                    <option>?1L – ?3L</option>
-                    <option>?3L – ?7L</option>
-                    <option>?7L+</option>
+                    <option>₹50K – ₹1L</option>
+                    <option>₹1L – ₹3L</option>
+                    <option>₹3L – ₹7L</option>
+                    <option>₹7L+</option>
                     <option>Help me figure it out</option>
                   </select>
                 </label>
               </div>
               <label><span>What&apos;s the biggest problem right now? *</span><textarea name="message" required minLength={10} rows={5} placeholder="Tell us what's not working — slow leads, weak website, no social presence, wasted ad budget..." /></label>
+              <input type="hidden" name="formStartedAt" value={formStartedAt} />
               <input className="honeypot" type="text" name="website" tabIndex={-1} autoComplete="off" aria-hidden="true" />
               {state === "error" ? <p className="form-error">{error}</p> : null}
               <button className="button button-primary form-submit" type="submit" disabled={state === "sending"}>
@@ -802,6 +804,8 @@ export function AgencySite() {
     </>
   );
 }
+
+
 
 
 
