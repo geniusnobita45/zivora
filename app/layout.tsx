@@ -1,4 +1,5 @@
 ﻿import type { Metadata, Viewport } from "next";
+import { site } from "@/lib/site";
 import "./globals.css";
 
 const siteUrl = "https://zivoraai.co.in";
@@ -42,14 +43,24 @@ export const metadata: Metadata = {
 const organizationJsonLd = {
   "@context": "https://schema.org",
   "@type": "Organization",
-  name: "ZIVORA AI",
+  name: site.name,
   url: siteUrl,
+  email: site.email,
+  telephone: site.phone,
+  address: {
+    "@type": "PostalAddress",
+    addressLocality: "Kanpur Nagar",
+    addressRegion: "Uttar Pradesh",
+    addressCountry: "IN",
+  },
   contactPoint: {
     "@type": "ContactPoint",
     contactType: "sales",
+    email: site.email,
+    telephone: site.phone,
     url: `${siteUrl}/#contact`,
   },
-  sameAs: [siteUrl],
+  sameAs: [siteUrl, site.social.instagram, site.social.github],
 };
 
 export const viewport: Viewport = {
@@ -77,5 +88,3 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
     </html>
   );
 }
-
-

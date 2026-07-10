@@ -7,7 +7,6 @@ import {
   ArrowRight,
   Bot,
   BrainCircuit,
-  BriefcaseBusiness,
   ChartNoAxesCombined,
   Check,
   ChevronRight,
@@ -20,19 +19,17 @@ import {
   Menu,
   MousePointer2,
   Play,
-  Plus,
   Rocket,
   Send,
   Target,
   UserRound,
-  UsersRound,
   Workflow,
   X,
   Zap,
 } from "lucide-react";
 import { AnimatePresence, motion, useScroll, useSpring, useTransform } from "motion/react";
 import { FormEvent, useEffect, useMemo, useRef, useState } from "react";
-import { clientProfileSlots, ownerProfile, processSteps, projectProgram, services, site, systemCards } from "@/lib/site";
+import { ownerProfile, processSteps, services, site, systemCards } from "@/lib/site";
 
 const HeroScene = dynamic(() => import("@/components/HeroScene"), {
   ssr: false,
@@ -465,98 +462,6 @@ function Process() {
   );
 }
 
-function Projects() {
-  return (
-    <section className="section projects-section" id="projects">
-      <div className="shell">
-        <div className="projects-top">
-          <SectionHeading
-            eyebrow="PROJECT PROGRAM"
-            title={<>A clean place for every <span className="gradient-text">project we ship.</span></>}
-            copy="This section is ready for future Zivora work. When you complete a client project, add the name, stack, outcome, images, and case-study link here."
-          />
-          <a className="text-link" href="#contact">Start the first client project <ArrowRight size={16} /></a>
-        </div>
-
-        <motion.div
-          className="project-empty-panel"
-          initial={{ opacity: 0, y: 28 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-80px" }}
-          transition={{ duration: 0.65 }}
-        >
-          <div className="project-empty-copy">
-            <span className="empty-kicker"><BriefcaseBusiness size={16} /> Portfolio system ready</span>
-            <h3>No client projects published yet.</h3>
-            <p>
-              Zivora is prepared to showcase real work with polished case studies, proof, deliverables,
-              technologies used, and measurable outcomes once the first client projects are completed.
-            </p>
-          </div>
-          <div className="program-grid">
-            {projectProgram.map((project, index) => (
-              <motion.article
-                className="program-card"
-                key={project.title}
-                initial={{ opacity: 0, y: 22 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: index * 0.08 }}
-              >
-                <div className="program-card-top">
-                  <span>{project.number}</span>
-                  <Plus size={18} />
-                </div>
-                <h3>{project.title}</h3>
-                <p>{project.description}</p>
-                <div className="service-tags">
-                  {project.tags.map((tag) => <span key={tag}>{tag}</span>)}
-                </div>
-              </motion.article>
-            ))}
-          </div>
-        </motion.div>
-      </div>
-    </section>
-  );
-}
-
-function Clients() {
-  return (
-    <section className="section clients-section" id="clients">
-      <div className="shell clients-layout">
-        <div className="clients-copy">
-          <SectionHeading
-            eyebrow="CLIENT PROFILES"
-            title={<>Future partners,<br /><span className="muted-heading">ready to be featured.</span></>}
-            copy="Once Zivora starts working with clients, this area can hold client profiles, industries, testimonials, and project relationships without changing the whole layout."
-          />
-        </div>
-
-        <div className="client-profile-grid">
-          {clientProfileSlots.map((client, index) => (
-            <motion.article
-              className="client-profile-card"
-              key={client.label}
-              initial={{ opacity: 0, x: 24 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true, margin: "-80px" }}
-              transition={{ delay: index * 0.08 }}
-            >
-              <div className="client-avatar"><UsersRound size={22} /></div>
-              <div>
-                <span>{client.label}</span>
-                <h3>{client.focus}</h3>
-                <p>{client.detail}</p>
-              </div>
-            </motion.article>
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-}
-
 function Owner() {
   return (
     <section className="section owner-section" id="owner">
@@ -679,8 +584,9 @@ function Contact() {
             <span><CircleCheck size={17} /> Zero jargon, pure business talk</span>
           </div>
           <div className="direct-contact">
-            <small>Prefer email?</small>
+            <small>Prefer direct contact?</small>
             <a href={`mailto:${site.email}`}>{site.email}</a>
+            {site.phones.map((phone) => <a href={phone.href} key={phone.href}>{phone.label}</a>)}
           </div>
         </div>
 
@@ -768,7 +674,7 @@ function Footer() {
         <div className="footer-links">
           <div><small>EXPLORE</small>{site.nav.map((item) => <a href={item.href} key={item.href}>{item.label}</a>)}</div>
           <div><small>CAPABILITIES</small><a href="#services">Automation</a><a href="#services">Web experiences</a><a href="#services">AI tools</a><a href="#services">Revenue growth</a></div>
-          <div><small>CONTACT</small><a href={`mailto:${site.email}`}>{site.email}</a><span>{site.location}</span></div>
+          <div><small>CONTACT</small><a href={`mailto:${site.email}`}>{site.email}</a>{site.phones.map((phone) => <a href={phone.href} key={phone.href}>{phone.label}</a>)}<a href={site.social.instagram} target="_blank" rel="noopener noreferrer">Instagram</a><a href={site.social.github} target="_blank" rel="noopener noreferrer">GitHub</a><span>{site.location}</span></div>
         </div>
       </div>
       <div className="shell footer-bottom">
@@ -794,8 +700,6 @@ export function AgencySite() {
         <Services />
         <OperatingSystem />
         <Process />
-        <Projects />
-        <Clients />
         <Owner />
         <Industries />
         <Contact />
@@ -804,6 +708,9 @@ export function AgencySite() {
     </>
   );
 }
+
+
+
 
 
 

@@ -1,14 +1,20 @@
 ﻿export const site = {
-  name: "ZIVORA",
+  name: "ZIVORA AI",
   tagline: "Automate · Innovate · Elevate",
   descriptor: "We don't just build websites — we engineer revenue machines. AI-powered automation, stunning digital experiences, and growth systems that work while you sleep.",
   email: "aryansharma@zivoraai.co.in",
-  phone: "+91 98765 43210",
-  location: "India · Serving clients worldwide",
+  phone: "+91 95690 65509",
+  phones: [
+    { label: "+91 95690 65509", href: "tel:+919569065509" },
+    { label: "+91 80547 85509", href: "tel:+918054785509" },
+  ],
+  location: "Kanpur Nagar, Uttar Pradesh, India",
+  social: {
+    instagram: "https://www.instagram.com/zivoraagency01?igsh=MWJ6b3c2dDE2YzhwMA==",
+    github: "https://github.com/geniusnobita45",
+  },
   nav: [
     { label: "Services", href: "#services" },
-    { label: "Projects", href: "#projects" },
-    { label: "Clients", href: "#clients" },
     { label: "Owner", href: "#owner" },
     { label: "Contact", href: "#contact" },
   ],
@@ -94,34 +100,6 @@ export const processSteps = [
   { step: "02", title: "Blueprint", text: "We design the exact system your business needs — what stays human, what gets automated, what gets tracked. You see the plan before we write a single line of code." },
   { step: "03", title: "Build & Launch", text: "We design, develop, integrate, and battle-test everything as one connected product. No half-baked MVPs — you get a system that works from day one." },
   { step: "04", title: "Scale & Optimize", text: "We monitor real performance data, spot opportunities you'd miss, and continuously optimize. Your system gets smarter and more profitable every month." },
-] as const;
-
-
-export const projectProgram = [
-  {
-    number: "01",
-    title: "Client Websites",
-    description: "A future home for premium websites, landing pages, and full-stack experiences built by Zivora.",
-    tags: ["Case study", "Design", "Deployment"],
-  },
-  {
-    number: "02",
-    title: "AI Automation Systems",
-    description: "Document the automations, AI agents, CRM workflows, and internal tools we build for businesses.",
-    tags: ["Automation", "AI agents", "Workflow"],
-  },
-  {
-    number: "03",
-    title: "Growth & Revenue Engines",
-    description: "Show campaigns, funnels, dashboards, and operating systems that helped clients grow with clarity.",
-    tags: ["Funnels", "Analytics", "Scale"],
-  },
-] as const;
-
-export const clientProfileSlots = [
-  { label: "Profile 01", focus: "Business identity", detail: "Client name, industry, location, and the problem we solved will appear here." },
-  { label: "Profile 02", focus: "Result snapshot", detail: "Add client outcomes, testimonial notes, metrics, and the services delivered." },
-  { label: "Profile 03", focus: "Partnership story", detail: "Use this slot for long-term collaborators, ongoing retainers, or featured partners." },
 ] as const;
 
 export const ownerProfile = {
