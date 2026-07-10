@@ -7,8 +7,9 @@
   location: "India · Serving clients worldwide",
   nav: [
     { label: "Services", href: "#services" },
-    { label: "Systems", href: "#systems" },
-    { label: "Process", href: "#process" },
+    { label: "Projects", href: "#projects" },
+    { label: "Clients", href: "#clients" },
+    { label: "Owner", href: "#owner" },
     { label: "Contact", href: "#contact" },
   ],
 } as const;
@@ -94,4 +95,45 @@ export const processSteps = [
   { step: "03", title: "Build & Launch", text: "We design, develop, integrate, and battle-test everything as one connected product. No half-baked MVPs — you get a system that works from day one." },
   { step: "04", title: "Scale & Optimize", text: "We monitor real performance data, spot opportunities you'd miss, and continuously optimize. Your system gets smarter and more profitable every month." },
 ] as const;
+
+
+export const projectProgram = [
+  {
+    number: "01",
+    title: "Client Websites",
+    description: "A future home for premium websites, landing pages, and full-stack experiences built by Zivora.",
+    tags: ["Case study", "Design", "Deployment"],
+  },
+  {
+    number: "02",
+    title: "AI Automation Systems",
+    description: "Document the automations, AI agents, CRM workflows, and internal tools we build for businesses.",
+    tags: ["Automation", "AI agents", "Workflow"],
+  },
+  {
+    number: "03",
+    title: "Growth & Revenue Engines",
+    description: "Show campaigns, funnels, dashboards, and operating systems that helped clients grow with clarity.",
+    tags: ["Funnels", "Analytics", "Scale"],
+  },
+] as const;
+
+export const clientProfileSlots = [
+  { label: "Profile 01", focus: "Business identity", detail: "Client name, industry, location, and the problem we solved will appear here." },
+  { label: "Profile 02", focus: "Result snapshot", detail: "Add client outcomes, testimonial notes, metrics, and the services delivered." },
+  { label: "Profile 03", focus: "Partnership story", detail: "Use this slot for long-term collaborators, ongoing retainers, or featured partners." },
+] as const;
+
+export const ownerProfile = {
+  name: "Aryan Sharma",
+  role: "Owner of Zivora · AI Automation Engineer",
+  portfolioUrl: "https://portfolio-backend-7kau.onrender.com/",
+  summary: "Aryan builds AI-powered products, automation systems, machine-learning workflows, and premium full-stack experiences. Zivora carries that same builder mindset into client work: intelligent systems, clean execution, and digital products made to scale.",
+  highlights: ["AI automation engineer", "Full-stack product builder", "Generative AI and workflow systems", "Premium web experiences"],
+  stats: [
+    { value: "20+", label: "AI projects explored" },
+    { value: "6+", label: "products built" },
+    { value: "2+", label: "years building" },
+  ],
+} as const;
 

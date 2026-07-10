@@ -6,27 +6,32 @@ import {
   ArrowRight,
   Bot,
   BrainCircuit,
+  BriefcaseBusiness,
   ChartNoAxesCombined,
   Check,
   ChevronRight,
   CircleCheck,
   Code2,
+  ExternalLink,
   Globe2,
   Share2,
   Layers3,
   Menu,
   MousePointer2,
   Play,
+  Plus,
   Rocket,
   Send,
   Target,
+  UserRound,
+  UsersRound,
   Workflow,
   X,
   Zap,
 } from "lucide-react";
 import { AnimatePresence, motion, useScroll, useSpring, useTransform } from "motion/react";
 import { FormEvent, useEffect, useMemo, useRef, useState } from "react";
-import { processSteps, services, site, systemCards } from "@/lib/site";
+import { clientProfileSlots, ownerProfile, processSteps, projectProgram, services, site, systemCards } from "@/lib/site";
 
 const HeroScene = dynamic(() => import("@/components/HeroScene"), {
   ssr: false,
@@ -207,10 +212,10 @@ function Hero() {
           </div>
           <div className="hero-proof">
             <div className="avatar-stack" aria-hidden="true">
-              <span>AI</span><span>3D</span><span>∞</span>
+              <span>AI</span><span>3D</span><span>8</span>
             </div>
             <div>
-              <strong>Strategy → Build → Scale</strong>
+              <strong>Strategy ? Build ? Scale</strong>
               <p>One team. Every digital system you need.</p>
             </div>
           </div>
@@ -264,7 +269,7 @@ function SignalStrip() {
   const signals = [
     { value: "24/7", label: "systems that work while you sleep" },
     { value: "01", label: "partner for everything digital" },
-    { value: "∞", label: "unlimited scale, zero bottlenecks" },
+    { value: "8", label: "unlimited scale, zero bottlenecks" },
     { value: "360°", label: "first impression to final sale" },
   ];
   return (
@@ -459,6 +464,138 @@ function Process() {
   );
 }
 
+function Projects() {
+  return (
+    <section className="section projects-section" id="projects">
+      <div className="shell">
+        <div className="projects-top">
+          <SectionHeading
+            eyebrow="PROJECT PROGRAM"
+            title={<>A clean place for every <span className="gradient-text">project we ship.</span></>}
+            copy="This section is ready for future Zivora work. When you complete a client project, add the name, stack, outcome, images, and case-study link here."
+          />
+          <a className="text-link" href="#contact">Start the first client project <ArrowRight size={16} /></a>
+        </div>
+
+        <motion.div
+          className="project-empty-panel"
+          initial={{ opacity: 0, y: 28 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-80px" }}
+          transition={{ duration: 0.65 }}
+        >
+          <div className="project-empty-copy">
+            <span className="empty-kicker"><BriefcaseBusiness size={16} /> Portfolio system ready</span>
+            <h3>No client projects published yet.</h3>
+            <p>
+              Zivora is prepared to showcase real work with polished case studies, proof, deliverables,
+              technologies used, and measurable outcomes once the first client projects are completed.
+            </p>
+          </div>
+          <div className="program-grid">
+            {projectProgram.map((project, index) => (
+              <motion.article
+                className="program-card"
+                key={project.title}
+                initial={{ opacity: 0, y: 22 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: index * 0.08 }}
+              >
+                <div className="program-card-top">
+                  <span>{project.number}</span>
+                  <Plus size={18} />
+                </div>
+                <h3>{project.title}</h3>
+                <p>{project.description}</p>
+                <div className="service-tags">
+                  {project.tags.map((tag) => <span key={tag}>{tag}</span>)}
+                </div>
+              </motion.article>
+            ))}
+          </div>
+        </motion.div>
+      </div>
+    </section>
+  );
+}
+
+function Clients() {
+  return (
+    <section className="section clients-section" id="clients">
+      <div className="shell clients-layout">
+        <div className="clients-copy">
+          <SectionHeading
+            eyebrow="CLIENT PROFILES"
+            title={<>Future partners,<br /><span className="muted-heading">ready to be featured.</span></>}
+            copy="Once Zivora starts working with clients, this area can hold client profiles, industries, testimonials, and project relationships without changing the whole layout."
+          />
+        </div>
+
+        <div className="client-profile-grid">
+          {clientProfileSlots.map((client, index) => (
+            <motion.article
+              className="client-profile-card"
+              key={client.label}
+              initial={{ opacity: 0, x: 24 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true, margin: "-80px" }}
+              transition={{ delay: index * 0.08 }}
+            >
+              <div className="client-avatar"><UsersRound size={22} /></div>
+              <div>
+                <span>{client.label}</span>
+                <h3>{client.focus}</h3>
+                <p>{client.detail}</p>
+              </div>
+            </motion.article>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function Owner() {
+  return (
+    <section className="section owner-section" id="owner">
+      <div className="shell owner-layout">
+        <motion.div
+          className="owner-card"
+          initial={{ opacity: 0, scale: 0.96 }}
+          whileInView={{ opacity: 1, scale: 1 }}
+          viewport={{ once: true, margin: "-80px" }}
+          transition={{ duration: 0.65 }}
+        >
+          <div className="owner-mark"><UserRound size={34} /></div>
+          <span className="owner-label">OWNER</span>
+          <h3>{ownerProfile.name}</h3>
+          <p>{ownerProfile.role}</p>
+          <a className="button button-primary owner-link" href={ownerProfile.portfolioUrl} target="_blank" rel="noopener noreferrer">
+            Open portfolio <ExternalLink size={16} />
+          </a>
+        </motion.div>
+
+        <div className="owner-copy">
+          <div className="eyebrow"><span />ABOUT THE OWNER</div>
+          <h2>Aryan brings the same <span className="gradient-text">AI builder energy</span> into Zivora.</h2>
+          <p>{ownerProfile.summary}</p>
+          <div className="owner-highlights">
+            {ownerProfile.highlights.map((item) => <span key={item}><Check size={13} />{item}</span>)}
+          </div>
+          <div className="owner-stats">
+            {ownerProfile.stats.map((stat) => (
+              <div key={stat.label}>
+                <strong>{stat.value}</strong>
+                <span>{stat.label}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
 function Industries() {
   const industries = ["Clinics & hospitals", "Local service businesses", "Creators & media brands", "Startups & SaaS", "E-commerce brands", "Coaches & educators"];
   return (
@@ -575,10 +712,10 @@ function Contact() {
                   <span>Budget range</span>
                   <select name="budget" defaultValue="">
                     <option value="">Select a range</option>
-                    <option>₹50K – ₹1L</option>
-                    <option>₹1L – ₹3L</option>
-                    <option>₹3L – ₹7L</option>
-                    <option>₹7L+</option>
+                    <option>?50K – ?1L</option>
+                    <option>?1L – ?3L</option>
+                    <option>?3L – ?7L</option>
+                    <option>?7L+</option>
                     <option>Help me figure it out</option>
                   </select>
                 </label>
@@ -644,6 +781,9 @@ export function AgencySite() {
         <Services />
         <OperatingSystem />
         <Process />
+        <Projects />
+        <Clients />
+        <Owner />
         <Industries />
         <Contact />
       </main>
@@ -651,6 +791,8 @@ export function AgencySite() {
     </>
   );
 }
+
+
 
 
 
