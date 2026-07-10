@@ -8,6 +8,16 @@ const publicRoutes = [
     changeFrequency: "weekly",
     priority: 1,
   },
+  {
+    path: "/privacy-policy",
+    changeFrequency: "yearly",
+    priority: 0.4,
+  },
+  {
+    path: "/terms",
+    changeFrequency: "yearly",
+    priority: 0.4,
+  },
 ] as const;
 
 export default function sitemap(): MetadataRoute.Sitemap {
@@ -20,4 +30,3 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: route.priority,
   }));
 }
-

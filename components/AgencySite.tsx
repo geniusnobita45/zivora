@@ -645,7 +645,7 @@ function Contact() {
               <button className="button button-primary form-submit" type="submit" disabled={state === "sending"}>
                 {state === "sending" ? "Sending..." : <>Send project brief <Send size={16} /></>}
               </button>
-              <p className="form-note">By submitting, you agree to be contacted about this project.</p>
+              <p className="form-note">By submitting this form, you agree to our <a href="/privacy-policy">Privacy Policy</a> and <a href="/terms">Terms</a>.</p>
             </form>
           )}
         </motion.div>
@@ -674,7 +674,7 @@ function Footer() {
         <div className="footer-links">
           <div><small>EXPLORE</small>{site.nav.map((item) => <a href={item.href} key={item.href}>{item.label}</a>)}</div>
           <div><small>CAPABILITIES</small><a href="#services">Automation</a><a href="#services">Web experiences</a><a href="#services">AI tools</a><a href="#services">Revenue growth</a></div>
-          <div><small>CONTACT</small><a href={`mailto:${site.email}`}>{site.email}</a>{site.phones.map((phone) => <a href={phone.href} key={phone.href}>{phone.label}</a>)}<a href={site.social.instagram} target="_blank" rel="noopener noreferrer">Instagram</a><a href={site.social.github} target="_blank" rel="noopener noreferrer">GitHub</a><span>{site.location}</span></div>
+          <div><small>CONTACT</small><a href={`mailto:${site.email}`}>{site.email}</a>{site.phones.map((phone) => <a href={phone.href} key={phone.href}>{phone.label}</a>)}<a href={site.social.instagram} target="_blank" rel="noopener noreferrer">Instagram</a><a href={site.social.github} target="_blank" rel="noopener noreferrer">GitHub</a><a href="/privacy-policy">Privacy Policy</a><a href="/terms">Terms</a><span>{site.location}</span></div>
         </div>
       </div>
       <div className="shell footer-bottom">
@@ -708,6 +708,7 @@ export function AgencySite() {
     </>
   );
 }
+
 
 
 
