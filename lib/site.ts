@@ -2,7 +2,7 @@
   name: "ZIVORA",
   tagline: "Automate · Innovate · Elevate",
   descriptor: "We don't just build websites — we engineer revenue machines. AI-powered automation, stunning digital experiences, and growth systems that work while you sleep.",
-  email: "hello@zivora.ai",
+  email: "aryansharma@zivoraai.co.in",
   phone: "+91 98765 43210",
   location: "India · Serving clients worldwide",
   nav: [
@@ -136,4 +136,5 @@ export const ownerProfile = {
     { value: "2+", label: "years building" },
   ],
 } as const;
+
 
