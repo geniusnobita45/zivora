@@ -1,3 +1,4 @@
+﻿import type { Metadata } from "next";
 import Link from "next/link";
 import { Orbit } from "lucide-react";
 import { isAdmin } from "@/lib/auth";
@@ -5,6 +6,15 @@ import { getLeads } from "@/lib/leads";
 import { site } from "@/lib/site";
 
 export const dynamic = "force-dynamic";
+export const revalidate = 0;
+
+export const metadata: Metadata = {
+  robots: {
+    index: false,
+    follow: false,
+    nocache: true,
+  },
+};
 
 export default async function AdminPage({
   searchParams,
@@ -25,7 +35,7 @@ export default async function AdminPage({
             </Link>
             <h1>Lead command center</h1>
             <p>Sign in to view project briefs submitted through the website.</p>
-            {params.error ? <p className="admin-error">Incorrect password. Please try again.</p> : null}
+            {params.error ? <p className="admin-error">Invalid credentials</p> : null}
             <input type="password" name="password" placeholder="Admin password" required autoFocus />
             <button className="button button-primary" type="submit">Open dashboard</button>
           </form>
@@ -58,7 +68,7 @@ export default async function AdminPage({
                   <small>CONTACT</small>
                   <h3>{lead.name}</h3>
                   <p>{lead.company || "No company provided"}</p>
-                  <p><a href={`mailto:${lead.email}`}>{lead.email}</a>{lead.phone ? <> · <a href={`tel:${lead.phone}`}>{lead.phone}</a></> : null}</p>
+                  <p><a href={`mailto:${lead.email}`}>{lead.email}</a>{lead.phone ? <> Â· <a href={`tel:${lead.phone}`}>{lead.phone}</a></> : null}</p>
                 </div>
                 <div className="lead-meta">
                   <small>PROJECT</small>
@@ -82,3 +92,4 @@ export default async function AdminPage({
     </main>
   );
 }
+

@@ -1,14 +1,18 @@
 ﻿import type { Metadata, Viewport } from "next";
 import "./globals.css";
 
+const siteUrl = "https://zivoraai.co.in";
+const siteTitle = "Zivora AI | AI Automation, Websites & Digital Growth";
+const siteDescription =
+  "Zivora AI builds business automation, AI tools, full-stack websites, workflows, social media, paid ads, AdSense, and growth systems for modern brands.";
+
 export const metadata: Metadata = {
-  metadataBase: new URL("https://zivora.example.com"),
+  metadataBase: new URL(siteUrl),
   title: {
-    default: "ZIVORA — Automate · Innovate · Elevate",
-    template: "%s — ZIVORA",
+    default: siteTitle,
+    template: "%s | Zivora AI",
   },
-  description:
-    "Zivora builds intelligent digital systems — AI automation, premium websites, custom AI tools, content engines and paid growth — so your business grows on autopilot.",
+  description: siteDescription,
   keywords: [
     "AI automation agency India",
     "premium website development",
@@ -17,12 +21,35 @@ export const metadata: Metadata = {
     "digital growth agency",
     "business automation",
   ],
+  alternates: {
+    canonical: siteUrl,
+  },
   openGraph: {
-    title: "ZIVORA — Automate · Innovate · Elevate",
-    description:
-      "We design intelligent systems across automation, websites, AI tools, content and growth — one connected engine for modern businesses.",
+    title: siteTitle,
+    description: siteDescription,
+    url: siteUrl,
+    siteName: "Zivora AI",
+    locale: "en_IN",
     type: "website",
   },
+  twitter: {
+    card: "summary_large_image",
+    title: siteTitle,
+    description: siteDescription,
+  },
+};
+
+const organizationJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  name: "ZIVORA AI",
+  url: siteUrl,
+  contactPoint: {
+    "@type": "ContactPoint",
+    contactType: "sales",
+    url: `${siteUrl}/#contact`,
+  },
+  sameAs: [siteUrl],
 };
 
 export const viewport: Viewport = {
@@ -41,9 +68,14 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
           href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
           rel="stylesheet"
         />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationJsonLd) }}
+        />
       </head>
       <body>{children}</body>
     </html>
   );
 }
+
 

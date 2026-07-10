@@ -1,52 +1,74 @@
-import { NextResponse } from "next/server";
-import { z } from "zod";
+import { CONTACT_MAX_BODY_BYTES, parseLeadSubmission } from "@/lib/contact-validation";
+import { ConfigurationError } from "@/lib/errors";
 import { saveLead } from "@/lib/leads";
+import { rateLimit } from "@/lib/rate-limit";
+import {
+  isJsonRequest,
+  jsonNoStore,
+  methodNotAllowed,
+  payloadTooLarge,
+  readLimitedText,
+  rejectInvalidOrigin,
+  unsupportedMediaType,
+} from "@/lib/request-security";
 
-const leadSchema = z.object({
-  name: z.string().trim().min(2).max(80),
-  email: z.string().trim().email().max(160),
-  phone: z.string().trim().max(30).optional().or(z.literal("")),
-  company: z.string().trim().max(120).optional().or(z.literal("")),
-  service: z.string().trim().min(2).max(80),
-  budget: z.string().trim().max(80).optional().or(z.literal("")),
-  message: z.string().trim().min(10).max(2000),
-  website: z.string().max(0).optional(),
-});
+export const dynamic = "force-dynamic";
 
 export async function POST(request: Request) {
   try {
-    const body = await request.json();
-    const parsed = leadSchema.safeParse(body);
+    const originError = rejectInvalidOrigin(request);
+    if (originError) return originError;
 
-    if (!parsed.success) {
-      return NextResponse.json(
-        { ok: false, error: "Please check the form and try again." },
-        { status: 400 },
+    if (!isJsonRequest(request)) {
+      return unsupportedMediaType();
+    }
+
+    const limited = await readLimitedText(request, CONTACT_MAX_BODY_BYTES);
+    if (!limited.ok) return payloadTooLarge();
+
+    let body: unknown;
+    try {
+      body = JSON.parse(limited.text);
+    } catch {
+      return jsonNoStore({ ok: false, error: "Please check the form and try again." }, { status: 400 });
+    }
+
+    const limitedByRate = await rateLimit({
+      request,
+      prefix: "contact",
+      limit: 6,
+      windowSeconds: 15 * 60,
+    });
+    if (!limitedByRate.allowed) {
+      return jsonNoStore(
+        { ok: false, error: "Too many requests. Please try again later." },
+        { status: 429, headers: { "Retry-After": String(limitedByRate.retryAfter) } },
       );
     }
 
-    if (parsed.data.website) {
-      return NextResponse.json({ ok: true });
+    const parsed = parseLeadSubmission(body);
+    if (!parsed.ok) {
+      return jsonNoStore({ ok: false, error: "Please check the form and try again." }, { status: 400 });
     }
 
-    const data = parsed.data;
-    const lead = await saveLead({
-      name: data.name,
-      email: data.email,
-      phone: data.phone || null,
-      company: data.company || null,
-      service: data.service,
-      budget: data.budget || null,
-      message: data.message,
-      source: "website",
-    });
+    if (parsed.spam) {
+      return jsonNoStore({ ok: true });
+    }
 
-    return NextResponse.json({ ok: true, id: lead.id }, { status: 201 });
+    await saveLead(parsed.data);
+    return jsonNoStore({ ok: true }, { status: 201 });
   } catch (error) {
-    console.error("Lead submission failed", error);
-    return NextResponse.json(
-      { ok: false, error: "Something went wrong. Please try again." },
-      { status: 500 },
-    );
+    if (error instanceof ConfigurationError) {
+      console.error("Lead submission configuration error:", error.message);
+    } else {
+      console.error("Lead submission failed.");
+    }
+    return jsonNoStore({ ok: false, error: "Something went wrong. Please try again." }, { status: 500 });
   }
 }
+
+export const GET = methodNotAllowed;
+export const PUT = methodNotAllowed;
+export const PATCH = methodNotAllowed;
+export const DELETE = methodNotAllowed;
+
