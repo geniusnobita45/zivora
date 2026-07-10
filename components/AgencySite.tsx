@@ -2,6 +2,7 @@
 
 import dynamic from "next/dynamic";
 import Image from "next/image";
+import ownerPortrait from "../nobi.jpg";
 import {
   ArrowRight,
   Bot,
@@ -567,7 +568,17 @@ function Owner() {
           viewport={{ once: true, margin: "-80px" }}
           transition={{ duration: 0.65 }}
         >
-          <div className="owner-mark"><UserRound size={34} /></div>
+          <div className="owner-portrait-wrap" aria-hidden="true">
+            <div className="owner-portrait-orbit" />
+            <Image
+              src={ownerPortrait}
+              alt="Aryan Sharma"
+              className="owner-portrait"
+              sizes="(max-width: 820px) 78vw, 320px"
+              priority={false}
+            />
+          </div>
+          <div className="owner-mark"><UserRound size={24} /></div>
           <span className="owner-label">OWNER</span>
           <h3>{ownerProfile.name}</h3>
           <p>{ownerProfile.role}</p>
