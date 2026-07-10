@@ -5,7 +5,13 @@ import "./globals.css";
 const siteUrl = "https://zivoraai.co.in";
 const siteTitle = "Zivora AI | AI Automation, Websites & Digital Growth";
 const siteDescription =
-  "Zivora AI builds business automation, AI tools, full-stack websites, workflows, social media, paid ads, AdSense, and growth systems for modern brands.";
+  "Zivora AI builds intelligent automation systems, premium websites, AI tools and digital growth solutions for modern businesses.";
+const socialImage = {
+  url: "/opengraph-image.png",
+  width: 1200,
+  height: 630,
+  alt: "ZIVORA AI - Automate. Innovate. Scale.",
+};
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
@@ -25,6 +31,10 @@ export const metadata: Metadata = {
   alternates: {
     canonical: siteUrl,
   },
+  icons: {
+    icon: "/icon.png",
+    apple: "/icon.png",
+  },
   openGraph: {
     title: siteTitle,
     description: siteDescription,
@@ -32,11 +42,13 @@ export const metadata: Metadata = {
     siteName: "Zivora AI",
     locale: "en_IN",
     type: "website",
+    images: [socialImage],
   },
   twitter: {
     card: "summary_large_image",
     title: siteTitle,
     description: siteDescription,
+    images: ["/twitter-image.png"],
   },
 };
 
@@ -45,22 +57,9 @@ const organizationJsonLd = {
   "@type": "Organization",
   name: site.name,
   url: siteUrl,
+  logo: `${siteUrl}/icon.png`,
   email: site.email,
-  telephone: site.phone,
-  address: {
-    "@type": "PostalAddress",
-    addressLocality: "Kanpur Nagar",
-    addressRegion: "Uttar Pradesh",
-    addressCountry: "IN",
-  },
-  contactPoint: {
-    "@type": "ContactPoint",
-    contactType: "sales",
-    email: site.email,
-    telephone: site.phone,
-    url: `${siteUrl}/#contact`,
-  },
-  sameAs: [siteUrl, site.social.instagram, site.social.github],
+  sameAs: [site.social.instagram, site.social.github],
 };
 
 export const viewport: Viewport = {
