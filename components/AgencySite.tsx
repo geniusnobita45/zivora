@@ -2,6 +2,7 @@
 
 import dynamic from "next/dynamic";
 import Image from "next/image";
+import { track } from "@vercel/analytics";
 import ownerPortrait from "../nobi.jpg";
 import {
   ArrowRight,
@@ -90,6 +91,43 @@ function AmbientCursor() {
       style={{ transform: `translate3d(${position.x - 240}px, ${position.y - 240}px, 0)` }}
       aria-hidden="true"
     />
+  );
+}
+
+function LazyHeroScene() {
+  const probeRef = useRef<HTMLDivElement>(null);
+  const [mounted, setMounted] = useState(false);
+  const [active, setActive] = useState(false);
+
+  useEffect(() => {
+    const node = probeRef.current;
+    if (!node || !("IntersectionObserver" in window)) {
+      setMounted(true);
+      setActive(true);
+      return;
+    }
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) setMounted(true);
+        setActive(entry.isIntersecting);
+      },
+      { rootMargin: "360px 0px" },
+    );
+
+    observer.observe(node);
+    return () => observer.disconnect();
+  }, []);
+
+  return (
+    <>
+      <div ref={probeRef} className="hero-scene-probe" aria-hidden="true" />
+      {mounted ? (
+        <HeroScene active={active} />
+      ) : (
+        <div className="hero-canvas hero-canvas-loading" aria-hidden="true" />
+      )}
+    </>
   );
 }
 
@@ -200,7 +238,7 @@ function Hero() {
             leads, close deals, and scale revenue on autopilot.
           </p>
           <div className="hero-actions">
-            <a className="button button-primary" href="#contact">
+            <a className="button button-primary" href="#contact" onClick={() => track("hero_cta_clicked")}>
               Let&apos;s build yours <ArrowRight size={17} />
             </a>
             <a className="button button-ghost" href="#services">
@@ -225,7 +263,7 @@ function Hero() {
         </motion.div>
 
         <motion.div className="hero-visual" style={{ y: orbY, opacity: orbOpacity }}>
-          <HeroScene />
+          <LazyHeroScene />
           <motion.div
             className="floating-card floating-card-top"
             animate={{ y: [0, -8, 0] }}
@@ -313,6 +351,7 @@ function Services() {
                 viewport={{ once: true, margin: "-50px" }}
                 transition={{ duration: 0.55, delay: index * 0.06 }}
                 whileHover={{ y: -8 }}
+                onClick={() => track("service_card_clicked", { service: service.title })}
               >
                 <div className="service-card-top">
                   <span className="service-number">{service.number}</span>
@@ -545,6 +584,31 @@ function Contact() {
   const [state, setState] = useState<"idle" | "sending" | "success" | "error">("idle");
   const [error, setError] = useState("");
   const [formStartedAt, setFormStartedAt] = useState(() => Date.now());
+  const sectionRef = useRef<HTMLElement>(null);
+  const enquiryStarted = useRef(false);
+
+  useEffect(() => {
+    const section = sectionRef.current;
+    if (!section || !("IntersectionObserver" in window)) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (!entry.isIntersecting) return;
+        track("contact_section_opened");
+        observer.disconnect();
+      },
+      { threshold: 0.35 },
+    );
+
+    observer.observe(section);
+    return () => observer.disconnect();
+  }, []);
+
+  function trackEnquiryStarted() {
+    if (enquiryStarted.current) return;
+    enquiryStarted.current = true;
+    track("enquiry_started");
+  }
 
   async function submit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -562,15 +626,17 @@ function Contact() {
       const result = await response.json();
       if (!response.ok) throw new Error(result.error || "Unable to send your request.");
       setState("success");
+      track("enquiry_submitted_successfully");
       form.reset();
     } catch (submissionError) {
       setState("error");
+      track("enquiry_failed");
       setError(submissionError instanceof Error ? submissionError.message : "Something went wrong.");
     }
   }
 
   return (
-    <section className="section contact-section" id="contact">
+    <section className="section contact-section" id="contact" ref={sectionRef}>
       <div className="contact-orb contact-orb-one" aria-hidden="true" />
       <div className="contact-orb contact-orb-two" aria-hidden="true" />
       <div className="shell contact-shell">
@@ -604,7 +670,7 @@ function Contact() {
               <button className="button button-ghost" onClick={() => { setState("idle"); setFormStartedAt(Date.now()); }}>Send another brief</button>
             </div>
           ) : (
-            <form onSubmit={submit}>
+            <form onSubmit={submit} onFocusCapture={trackEnquiryStarted}>
               <div className="form-head">
                 <span>PROJECT BRIEF</span>
                 <small>Takes about 2 minutes</small>

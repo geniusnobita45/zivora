@@ -2,7 +2,7 @@
 
 import { Float, Line, Sparkles } from "@react-three/drei";
 import { Canvas, useFrame } from "@react-three/fiber";
-import { useMemo, useRef } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import * as THREE from "three";
 
 const nodePositions: [number, number, number][] = [
@@ -18,7 +18,22 @@ const nodePositions: [number, number, number][] = [
   [0.12, 0.18, 1.18],
 ];
 
-function LiquidGlassCore() {
+function useMediaQuery(query: string) {
+  const [matches, setMatches] = useState(false);
+
+  useEffect(() => {
+    const media = window.matchMedia(query);
+    const update = () => setMatches(media.matches);
+
+    update();
+    media.addEventListener("change", update);
+    return () => media.removeEventListener("change", update);
+  }, [query]);
+
+  return matches;
+}
+
+function LiquidGlassCore({ isMobile, animate }: { isMobile: boolean; animate: boolean }) {
   const group = useRef<THREE.Group>(null);
   const core = useRef<THREE.Mesh>(null);
   const film = useRef<THREE.Mesh>(null);
@@ -26,6 +41,8 @@ function LiquidGlassCore() {
   const ribbonTwo = useRef<THREE.Mesh>(null);
 
   useFrame((state, delta) => {
+    if (!animate) return;
+
     const time = state.clock.elapsedTime;
     if (group.current) {
       group.current.rotation.y += delta * 0.12;
@@ -61,12 +78,16 @@ function LiquidGlassCore() {
     ] as [[number, number, number], [number, number, number]][],
     [],
   );
+  const coreDetail = isMobile ? 3 : 5;
+  const filmDetail = isMobile ? 2 : 3;
+  const nodeSegments = isMobile ? 16 : 28;
+  const torusSegments = isMobile ? 112 : 180;
 
   return (
     <group ref={group}>
       <Float speed={1.1} rotationIntensity={0.18} floatIntensity={0.24}>
         <mesh ref={core}>
-          <icosahedronGeometry args={[1.05, 5]} />
+          <icosahedronGeometry args={[1.05, coreDetail]} />
           <meshPhysicalMaterial
             color="#dff7ff"
             emissive="#60a5fa"
@@ -84,7 +105,7 @@ function LiquidGlassCore() {
         </mesh>
 
         <mesh ref={film} scale={[1.23, 1.23, 1.23]} rotation={[0.44, 0.1, 0.28]}>
-          <icosahedronGeometry args={[1, 3]} />
+          <icosahedronGeometry args={[1, filmDetail]} />
           <meshPhysicalMaterial
             color="#93c5fd"
             emissive="#22d3ee"
@@ -100,11 +121,11 @@ function LiquidGlassCore() {
         </mesh>
 
         <mesh ref={ribbonOne} scale={[1.7, 1.7, 1.7]} rotation={[0.84, -0.24, 0.58]}>
-          <torusGeometry args={[1, 0.013, 12, 180]} />
+          <torusGeometry args={[1, 0.013, 10, torusSegments]} />
           <meshPhysicalMaterial color="#e0f2fe" emissive="#60a5fa" emissiveIntensity={0.7} transparent opacity={0.46} roughness={0.05} />
         </mesh>
         <mesh ref={ribbonTwo} scale={[2.03, 2.03, 2.03]} rotation={[-0.45, 0.62, -0.25]}>
-          <torusGeometry args={[1, 0.008, 10, 180]} />
+          <torusGeometry args={[1, 0.008, 8, torusSegments]} />
           <meshPhysicalMaterial color="#a7f3d0" emissive="#22d3ee" emissiveIntensity={0.54} transparent opacity={0.3} roughness={0.08} />
         </mesh>
       </Float>
@@ -123,7 +144,7 @@ function LiquidGlassCore() {
       {nodePositions.map((position, index) => (
         <Float key={index} speed={1 + (index % 3) * 0.2} floatIntensity={0.28}>
           <mesh position={position}>
-            <sphereGeometry args={[index % 3 === 0 ? 0.108 : 0.078, 28, 28]} />
+            <sphereGeometry args={[index % 3 === 0 ? 0.108 : 0.078, nodeSegments, nodeSegments]} />
             <meshPhysicalMaterial
               color={index % 2 === 0 ? "#e0f2fe" : "#a7f3d0"}
               emissive={index % 2 === 0 ? "#60a5fa" : "#22d3ee"}
@@ -143,20 +164,27 @@ function LiquidGlassCore() {
   );
 }
 
-export default function HeroScene() {
+export default function HeroScene({ active = true }: { active?: boolean }) {
+  const isMobile = useMediaQuery("(max-width: 767px)");
+  const reduceMotion = useMediaQuery("(prefers-reduced-motion: reduce)");
+  const animate = active && !reduceMotion;
+  const particleCount = isMobile ? 38 : 95;
+  const sparkleSpeed = animate ? 0.16 : 0;
+
   return (
     <div className="hero-canvas" aria-hidden="true">
       <Canvas
         camera={{ position: [0, 0, 7.2], fov: 42 }}
-        dpr={[1, 1.6]}
-        gl={{ antialias: true, alpha: true, powerPreference: "high-performance" }}
+        dpr={isMobile ? [0.75, 1] : [1, 1.5]}
+        frameloop={animate ? "always" : "demand"}
+        gl={{ antialias: !isMobile, alpha: true, powerPreference: "high-performance" }}
       >
         <ambientLight intensity={1.05} />
         <pointLight position={[3.2, 3.4, 4]} intensity={24} color="#dbeafe" />
         <pointLight position={[-4, -2.2, 3]} intensity={18} color="#22d3ee" />
         <pointLight position={[0, -3.5, 5]} intensity={10} color="#8b5cf6" />
-        <LiquidGlassCore />
-        <Sparkles count={95} scale={7.2} size={1.25} speed={0.16} color="#dff7ff" opacity={0.32} />
+        <LiquidGlassCore isMobile={isMobile} animate={animate} />
+        <Sparkles count={particleCount} scale={7.2} size={1.25} speed={sparkleSpeed} color="#dff7ff" opacity={0.32} />
       </Canvas>
     </div>
   );

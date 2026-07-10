@@ -420,6 +420,7 @@ img, svg { display: block; }
 }
 .hero-proof p { margin: 5px 0 0; color: #6b7280; font-size: 12px; }
 .hero-visual { position: relative; min-height: 700px; }
+.hero-scene-probe { position: absolute; inset: 0; pointer-events: none; }
 .hero-canvas {
   position: absolute;
   inset: -40px -120px -30px -80px;
@@ -1404,7 +1405,7 @@ img, svg { display: block; }
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   *, *::before, *::after { animation-duration: .01ms!important; animation-iteration-count: 1!important; transition-duration: .01ms!important; }
-  .cursor-ambient, .hero-canvas { display: none; }
+  .cursor-ambient { display: none; }
   .hero-visual { min-height: 250px; background: radial-gradient(circle, rgba(59, 130, 246, .18), transparent 48%); }
 }
 
