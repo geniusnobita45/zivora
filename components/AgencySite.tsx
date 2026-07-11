@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import dynamic from "next/dynamic";
 import Image from "next/image";
@@ -15,13 +15,13 @@ import {
   Code2,
   ExternalLink,
   Globe2,
-  Share2,
   Layers3,
   Menu,
   MousePointer2,
   Play,
   Rocket,
   Send,
+  Share2,
   Target,
   UserRound,
   Workflow,
@@ -35,6 +35,10 @@ import { ownerProfile, projects, services, site } from "@/lib/site";
 const HeroScene = dynamic(() => import("@/components/HeroScene"), {
   ssr: false,
   loading: () => <div className="hero-canvas hero-canvas-loading" aria-hidden="true" />,
+});
+
+const ParticleField = dynamic(() => import("@/components/ParticleField"), {
+  ssr: false,
 });
 
 const iconMap = {
@@ -153,6 +157,7 @@ function LazyHeroScene() {
     </>
   );
 }
+
 function Header() {
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
@@ -184,7 +189,7 @@ function Header() {
         </nav>
 
         <a className="nav-cta" href="#contact">
-          Contact <ArrowRight size={15} />
+          Get Started <ArrowRight size={15} />
         </a>
 
         <button className="menu-button" onClick={() => setOpen(true)} aria-label="Open menu">
@@ -206,7 +211,7 @@ function Header() {
                   src="/zivora-logo-96.webp"
                   alt="Zivora Logo"
                   width={170}
-              height={56}
+                  height={56}
                   className="brand-logo"
                 />
                 <span className="brand-text">{site.name}</span>
@@ -241,25 +246,23 @@ function Hero() {
 
       <div className="hero-content shell">
         <div className="hero-copy">
-
           <div className="status-pill">
             <span className="status-dot" />
-            Websites · AI Automation · Lead Systems
+            AI Automation · Web Development · Growth Systems
           </div>
-          <h1>Zivora AI — Automate. Innovate. Scale.</h1>
+          <h1>We Build the Systems That Grow Your Business</h1>
           <p className="hero-lead">
-            Zivora AI is an AI automation and digital growth agency that builds
-            client-ready websites, lead follow-up systems, custom AI tools, and
-            content workflows for businesses that want fewer manual tasks and
-            clearer growth.
+            Zivora AI partners with ambitious businesses to build websites that convert,
+            automations that save hours, custom AI tools, and growth systems —
+            so you can focus on what you do best.
           </p>
           <div className="hero-actions">
-            <a className="button button-primary" href="/contact" onClick={() => track("hero_cta_clicked")}>
-              Start with my workflow <ArrowRight size={17} />
+            <a className="button button-primary" href="#contact" onClick={() => track("hero_cta_clicked")}>
+              Book a Free Strategy Call <ArrowRight size={17} />
             </a>
             <a className="button button-ghost" href="#services">
               <span className="play-icon"><Play size={13} fill="currentColor" /></span>
-              View services
+              Explore Our Services
             </a>
           </div>
           <div className="hero-proof">
@@ -267,14 +270,14 @@ function Hero() {
               <span>AI</span><span>3D</span><span>8</span>
             </div>
             <div>
-              <strong>Map. Build. Connect.</strong>
-              <p>Web pages, automations, AI tools, and follow-up in one plan.</p>
+              <strong>Trusted by Growing Businesses</strong>
+              <p>Websites, automations, AI tools, and growth — all in one partner.</p>
             </div>
           </div>
           <div className="hero-metrics" aria-label="Zivora capabilities">
-            <span><strong>Fast</strong> lead response</span>
-            <span><strong>Clear</strong> service pages</span>
-            <span><strong>Less</strong> manual work</span>
+            <span><strong>2x</strong> faster lead response</span>
+            <span><strong>10+</strong> hours saved weekly</span>
+            <span><strong>100%</strong> custom-built systems</span>
           </div>
         </div>
 
@@ -286,7 +289,7 @@ function Hero() {
             transition={{ duration: 4.6, repeat: Infinity, ease: "easeInOut" }}
           >
             <span className="floating-icon"><Workflow size={16} /></span>
-            <div><small>WORKFLOW</small><strong>New enquiry assigned</strong></div>
+            <div><small>AUTOMATION</small><strong>New lead captured & routed</strong></div>
             <span className="live-chip">LIVE</span>
           </motion.div>
           <motion.div
@@ -295,11 +298,11 @@ function Hero() {
             transition={{ duration: 5.2, repeat: Infinity, ease: "easeInOut" }}
           >
             <span className="floating-icon cyan"><Zap size={16} /></span>
-            <div><small>SYSTEM STATUS</small><strong>Forms, CRM, follow-up connected</strong></div>
+            <div><small>SYSTEM STATUS</small><strong>All workflows connected</strong></div>
             <CircleCheck size={18} className="success-icon" />
           </motion.div>
           <div className="orbit-label orbit-label-one">CAPTURE</div>
-          <div className="orbit-label orbit-label-two">FOLLOW UP</div>
+          <div className="orbit-label orbit-label-two">AUTOMATE</div>
           <div className="orbit-label orbit-label-three">CONVERT</div>
         </motion.div>
       </div>
@@ -308,9 +311,9 @@ function Hero() {
         <div className="scroll-cue"><MousePointer2 size={15} /><span>Scroll to explore</span></div>
         <div className="capability-line">
           <span>LEAD AUTOMATION</span><i />
-          <span>SERVICE PAGES</span><i />
+          <span>CONVERSION WEBSITES</span><i />
           <span>AI TOOLS</span><i />
-          <span>CONTENT SYSTEMS</span>
+          <span>GROWTH SYSTEMS</span>
         </div>
       </div>
     </section>
@@ -319,10 +322,10 @@ function Hero() {
 
 function SignalStrip() {
   const signals = [
-    { value: "01", label: "clear workflow before build" },
-    { value: "02", label: "website and automation connected" },
-    { value: "03", label: "lead follow-up made visible" },
-    { value: "04", label: "content and ads tied to enquiries" },
+    { value: "01", label: "Deep discovery before any build" },
+    { value: "02", label: "Everything connected & integrated" },
+    { value: "03", label: "Real-time lead tracking & alerts" },
+    { value: "04", label: "Continuous optimization post-launch" },
   ];
   return (
     <section className="signal-strip">
@@ -350,9 +353,9 @@ function Services() {
     <section className="section services-section" id="services">
       <div className="shell">
         <SectionHeading
-          eyebrow="WHAT WE BUILD"
-          title={<>Client-ready systems. <span className="muted-heading">Not random services.</span></>}
-          copy="Choose the part your business needs first: a clearer website, faster lead follow-up, a useful AI tool, content workflows, or an ad funnel that sends enquiries to the right place."
+          eyebrow="OUR SERVICES"
+          title={<>Solutions That Drive <span className="muted-heading">Real Results</span></>}
+          copy="Every service is designed around one goal: helping your business capture more leads, close more deals, and grow faster with less manual work."
         />
 
         <div className="service-grid">
@@ -397,21 +400,21 @@ function AboutUs() {
       <div className="shell about-layout">
         <div className="about-heading-panel">
           <div className="eyebrow"><span />ABOUT US</div>
-          <h2>Zivora AI builds simple digital systems that make business work easier.</h2>
-          <div className="about-mini-stats" aria-label="Zivora working style">
-            <span><strong>01</strong> Map</span>
+          <h2>Your Growth Partner in AI & Digital Transformation</h2>
+          <div className="about-mini-stats" aria-label="Our approach">
+            <span><strong>01</strong> Discover</span>
             <span><strong>02</strong> Build</span>
-            <span><strong>03</strong> Connect</span>
+            <span><strong>03</strong> Scale</span>
           </div>
         </div>
 
         <div className="about-showcase">
           <div className="about-copy about-glass-copy">
             <p>
-              We help businesses turn scattered websites, leads, content, and manual follow-ups into one clear workflow. The goal is not to add more noise. The goal is to build the pages, automations, AI tools, and contact flows your team can actually use.
+              We help businesses replace scattered tools, missed leads, and manual workflows with one integrated digital system. Whether it&apos;s a website that actually converts, an automation that follows up in seconds, or an AI tool that saves your team hours every week — we build it all under one roof.
             </p>
             <p>
-              Start with one problem: a weak website, slow lead response, repeated admin work, or an AI tool idea. We map it, build it, connect it, and keep the system understandable after launch.
+              Start with your biggest pain point. We&apos;ll audit it, architect the right solution, build and integrate it, and make sure your team can run it independently after launch.
             </p>
           </div>
 
@@ -423,7 +426,7 @@ function AboutUs() {
             </div>
             <div className="liquid-node node-web"><Globe2 size={18} /><span>Website</span></div>
             <div className="liquid-node node-ai"><BrainCircuit size={18} /><span>AI Tool</span></div>
-            <div className="liquid-node node-flow"><Workflow size={18} /><span>Follow-up</span></div>
+            <div className="liquid-node node-flow"><Workflow size={18} /><span>Automation</span></div>
             <div className="liquid-node node-growth"><ChartNoAxesCombined size={18} /><span>Growth</span></div>
             <div className="liquid-beam beam-one" />
             <div className="liquid-beam beam-two" />
@@ -440,12 +443,12 @@ function Projects() {
       <div className="shell">
         <div className="projects-top">
           <SectionHeading
-            eyebrow="PROJECTS"
-            title={<>Selected work and <span className="muted-heading">project links.</span></>}
-            copy="A small section for actual work, not random decoration. More project links can be added here from your portfolio when you share the portfolio URL."
+            eyebrow="OUR WORK"
+            title={<>Real Results. <span className="muted-heading">Real Systems.</span></>}
+            copy="Every project below represents a real system we built — not a template, not a mockup. Click through to see how we approach complex problems."
           />
           <a className="text-link" href={ownerProfile.portfolioUrl} target="_blank" rel="noopener noreferrer">
-            Open portfolio <ExternalLink size={16} />
+            View Full Portfolio <ExternalLink size={16} />
           </a>
         </div>
 
@@ -488,17 +491,17 @@ function Owner() {
             />
           </div>
           <div className="owner-mark"><UserRound size={24} /></div>
-          <span className="owner-label">OWNER</span>
+          <span className="owner-label">FOUNDER</span>
           <h3>{ownerProfile.name}</h3>
           <p>{ownerProfile.role}</p>
           <a className="button button-primary owner-link" href={ownerProfile.portfolioUrl} target="_blank" rel="noopener noreferrer">
-            Open portfolio <ExternalLink size={16} />
+            View Portfolio <ExternalLink size={16} />
           </a>
         </motion.div>
 
         <div className="owner-copy">
-          <div className="eyebrow"><span />ABOUT THE OWNER</div>
-          <h2>Aryan brings the same <span className="gradient-text">AI builder energy</span> into Zivora.</h2>
+          <div className="eyebrow"><span />MEET THE FOUNDER</div>
+          <h2>The <span className="gradient-text">AI builder mindset</span> behind every Zivora system.</h2>
           <p>{ownerProfile.summary}</p>
           <div className="owner-highlights">
             {ownerProfile.highlights.map((item) => <span key={item}><Check size={13} />{item}</span>)}
@@ -516,6 +519,7 @@ function Owner() {
     </section>
   );
 }
+
 function Contact() {
   const [state, setState] = useState<"idle" | "sending" | "success" | "error">("idle");
   const [error, setError] = useState("");
@@ -577,16 +581,16 @@ function Contact() {
       <div className="contact-orb contact-orb-two" aria-hidden="true" />
       <div className="shell contact-shell">
         <div className="contact-copy">
-          <div className="eyebrow"><span />LET&apos;S TALK</div>
-          <h2>Tell us what&apos;s broken.<br />We&apos;ll show you <span className="gradient-text">what&apos;s possible.</span></h2>
-          <p>Whether leads are slipping through the cracks, your website isn&apos;t converting, or growth feels stuck — we&apos;ll map the exact system your business needs in one call.</p>
+          <div className="eyebrow"><span />LET&apos;S BUILD TOGETHER</div>
+          <h2>Ready to Build Something <span className="gradient-text">Powerful?</span></h2>
+          <p>Whether you need a high-converting website, an automation that saves your team hours, or a custom AI tool — we&apos;ll map the exact system your business needs in one free strategy call.</p>
           <div className="contact-points">
             <span><CircleCheck size={17} /> Free 30-minute strategy call</span>
-            <span><CircleCheck size={17} /> Custom system recommendation</span>
-            <span><CircleCheck size={17} /> Zero jargon, pure business talk</span>
+            <span><CircleCheck size={17} /> Custom system blueprint for your business</span>
+            <span><CircleCheck size={17} /> No jargon — just clear, actionable next steps</span>
           </div>
           <div className="direct-contact">
-            <small>Prefer direct contact?</small>
+            <small>Prefer to reach out directly?</small>
             <a href={`mailto:${site.email}`}>{site.email}</a>
             {site.phones.map((phone) => <a href={phone.href} key={phone.href}>{phone.label}</a>)}
           </div>
@@ -601,9 +605,9 @@ function Contact() {
           {state === "success" ? (
             <div className="success-state">
               <span><CircleCheck size={29} /></span>
-              <h3>We got your brief.</h3>
-              <p>Our team is reviewing your project. Expect a reply with a clear next step within 24 hours — no generic sales pitch, we promise.</p>
-              <button className="button button-ghost" onClick={() => { setState("idle"); setFormStartedAt(Date.now()); }}>Send another brief</button>
+              <h3>Your brief is with our team.</h3>
+              <p>We&apos;re reviewing your project details now. Expect a personalized response with clear next steps within 24 hours — no generic sales pitch, guaranteed.</p>
+              <button className="button button-ghost" onClick={() => { setState("idle"); setFormStartedAt(Date.now()); }}>Submit another brief</button>
             </div>
           ) : (
             <form onSubmit={submit} onFocusCapture={trackEnquiryStarted}>
@@ -612,12 +616,12 @@ function Contact() {
                 <small>Takes about 2 minutes</small>
               </div>
               <div className="form-grid two-col">
-                <label><span>Your name *</span><input name="name" required minLength={2} placeholder="Annie" /></label>
+                <label><span>Your name *</span><input name="name" required minLength={2} placeholder="Your full name" /></label>
                 <label><span>Work email *</span><input name="email" type="email" required placeholder="you@company.com" /></label>
               </div>
               <div className="form-grid two-col">
                 <label><span>Phone / WhatsApp</span><input name="phone" placeholder="+91 ..." /></label>
-                <label><span>Company / brand</span><input name="company" placeholder="Your business name" /></label>
+                <label><span>Company / Brand</span><input name="company" placeholder="Your business name" /></label>
               </div>
               <div className="form-grid two-col">
                 <label>
@@ -625,27 +629,27 @@ function Contact() {
                   <select name="service" required defaultValue="">
                     <option value="" disabled>Select a service</option>
                     {services.map((service) => <option key={service.title}>{service.title}</option>)}
-                    <option>The full system — everything</option>
+                    <option>Complete digital system — everything</option>
                   </select>
                 </label>
                 <label>
                   <span>Budget range</span>
                   <select name="budget" defaultValue="">
                     <option value="">Select a range</option>
-                    <option>?50K – ?1L</option>
-                    <option>?1L – ?3L</option>
-                    <option>?3L – ?7L</option>
-                    <option>?7L+</option>
-                    <option>Help me figure it out</option>
+                    <option>₹50K – ₹1L</option>
+                    <option>₹1L – ₹3L</option>
+                    <option>₹3L – ₹7L</option>
+                    <option>₹7L+</option>
+                    <option>Not sure yet — help me plan</option>
                   </select>
                 </label>
               </div>
-              <label><span>What&apos;s the biggest problem right now? *</span><textarea name="message" required minLength={10} rows={5} placeholder="Tell us what's not working — slow leads, weak website, no social presence, wasted ad budget..." /></label>
+              <label><span>What&apos;s your biggest challenge right now? *</span><textarea name="message" required minLength={10} rows={5} placeholder="Tell us about the problem you want solved — slow leads, low conversions, manual processes, scaling challenges..." /></label>
               <input type="hidden" name="formStartedAt" value={formStartedAt} />
               <input className="honeypot" type="text" name="website" tabIndex={-1} autoComplete="off" aria-hidden="true" />
               {state === "error" ? <p className="form-error">{error}</p> : null}
               <button className="button button-primary form-submit" type="submit" disabled={state === "sending"}>
-                {state === "sending" ? "Sending..." : <>Send project brief <Send size={16} /></>}
+                {state === "sending" ? "Sending..." : <>Send Project Brief <Send size={16} /></>}
               </button>
               <p className="form-note">By submitting this form, you agree to our <a href="/privacy-policy">Privacy Policy</a> and <a href="/terms">Terms</a>.</p>
             </form>
@@ -680,13 +684,13 @@ function Footer() {
         </div>
         <div className="footer-links">
           <div><small>EXPLORE</small>{site.nav.map((item) => <a href={item.href} key={item.href}>{item.label}</a>)}</div>
-          <div><small>CAPABILITIES</small><a href="/ai-automation-services">Automation</a><a href="/website-development">Web experiences</a><a href="/ai-tools-development">AI tools</a><a href="/adsense-growth">Revenue growth</a></div>
-          <div><small>CONTACT</small><a href={`mailto:${site.email}`}>{site.email}</a>{site.phones.map((phone) => <a href={phone.href} key={phone.href}>{phone.label}</a>)}<a href={site.social.instagram} target="_blank" rel="noopener noreferrer">Instagram</a><a href={site.social.github} target="_blank" rel="noopener noreferrer">GitHub</a><a href="/privacy-policy">Privacy Policy</a><a href="/terms">Terms</a><span>{site.location}</span></div>
+          <div><small>CAPABILITIES</small><a href="/ai-automation-services">AI Automation</a><a href="/website-development">Web Development</a><a href="/ai-tools-development">AI Tools</a><a href="/adsense-growth">Content Growth</a></div>
+          <div><small>CONNECT</small><a href={`mailto:${site.email}`}>{site.email}</a>{site.phones.map((phone) => <a href={phone.href} key={phone.href}>{phone.label}</a>)}<a href={site.social.instagram} target="_blank" rel="noopener noreferrer">Instagram</a><a href={site.social.github} target="_blank" rel="noopener noreferrer">GitHub</a><a href="/privacy-policy">Privacy Policy</a><a href="/terms">Terms</a><span>{site.location}</span></div>
         </div>
       </div>
       <div className="shell footer-bottom">
         <span>© {new Date().getFullYear()} {site.name}. All rights reserved.</span>
-        <span>Automate · Innovate · Scale</span>
+        <span>We Build the Systems That Grow Your Business</span>
       </div>
     </footer>
   );
@@ -699,10 +703,12 @@ export function AgencySite() {
   return (
     <>
       <motion.div className="page-progress" style={{ scaleX: smoothProgress }} />
+      <ParticleField />
       <AmbientCursor />
       <Header />
       <main>
         <Hero />
+        <SignalStrip />
         <AboutUs />
         <Services />
         <Owner />
@@ -713,16 +719,3 @@ export function AgencySite() {
     </>
   );
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
