@@ -55,22 +55,28 @@ function generateParticles(count: number): Particle[] {
   return particles;
 }
 
+function prefersReducedMotion() {
+  return typeof window !== "undefined" && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+}
+
+function initialParticles() {
+  if (typeof window === "undefined" || prefersReducedMotion()) return [];
+  const mobileQuery = window.matchMedia("(max-width: 560px)");
+  const count = mobileQuery.matches ? 30 : 65;
+  return generateParticles(count);
+}
+
 export default function ParticleField() {
-  const [particles, setParticles] = useState<Particle[]>([]);
-  const [visible, setVisible] = useState(true);
+  const [particles, setParticles] = useState<Particle[]>(initialParticles);
+  const [visible, setVisible] = useState(() => !prefersReducedMotion());
 
   useEffect(() => {
     const motionQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
-    if (motionQuery.matches) {
-      setVisible(false);
-      return;
-    }
+    const handleMotionChange = (e: MediaQueryListEvent) => {
+      setVisible(!e.matches);
+      setParticles(e.matches ? [] : initialParticles());
+    };
 
-    const mobileQuery = window.matchMedia("(max-width: 560px)");
-    const count = mobileQuery.matches ? 30 : 65; // Slightly reduced count to avoid cluttering with larger star sizes
-    setParticles(generateParticles(count));
-
-    const handleMotionChange = (e: MediaQueryListEvent) => setVisible(!e.matches);
     motionQuery.addEventListener("change", handleMotionChange);
     return () => motionQuery.removeEventListener("change", handleMotionChange);
   }, []);

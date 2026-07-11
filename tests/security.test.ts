@@ -1,4 +1,4 @@
-﻿import assert from "node:assert/strict";
+import assert from "node:assert/strict";
 import test from "node:test";
 import { parseLeadSubmission } from "../lib/contact-validation.ts";
 import { hashPassword, verifyPasswordHash } from "../lib/password.ts";
@@ -7,11 +7,11 @@ import { createAdminSessionToken, verifyAdminSessionToken } from "../lib/session
 const now = Date.now();
 const validSubmission = {
   name: "Aryan Sharma",
-  email: "OWNER@EXAMPLE.COM",
+  email: "ARYANSHARMA@ZIVORAAI.CO.IN",
   phone: "+91 98765 43210",
   company: "Zivora AI",
   service: "AI Automation",
-  budget: "Help me figure it out",
+  budget: "Not sure yet — help me plan",
   message: "We need secure workflow automation for inbound leads.",
   website: "",
   formStartedAt: now - 3_000,
@@ -21,7 +21,27 @@ test("valid contact request is normalized", () => {
   const result = parseLeadSubmission(validSubmission, now);
   assert.equal(result.ok, true);
   assert.equal(result.spam, false);
-  assert.equal(result.data.email, "owner@example.com");
+  assert.equal(result.data.email, "aryansharma@zivoraai.co.in");
+});
+
+test("contact validation accepts homepage service and budget labels", () => {
+  for (const service of [
+    "AI Automation",
+    "Website Development",
+    "Custom AI Tools",
+    "Content & AdSense Growth",
+    "Social Media Systems",
+    "Paid Ad Funnels",
+    "Complete digital system — everything",
+  ]) {
+    const result = parseLeadSubmission({ ...validSubmission, service }, now);
+    assert.equal(result.ok, true, service);
+  }
+
+  for (const budget of ["", "₹50K – ₹1L", "₹1L – ₹3L", "₹3L – ₹7L", "₹7L+", "Not sure yet — help me plan"]) {
+    const result = parseLeadSubmission({ ...validSubmission, budget }, now);
+    assert.equal(result.ok, true, budget || "empty budget");
+  }
 });
 
 test("contact validation rejects invalid email", () => {
@@ -45,7 +65,7 @@ test("contact validation rejects unrealistically fast submissions", () => {
 });
 
 test("honeypot submissions are accepted but flagged as spam", () => {
-  const result = parseLeadSubmission({ ...validSubmission, website: "https://spam.example" }, now);
+  const result = parseLeadSubmission({ ...validSubmission, website: "https://spam.invalid" }, now);
   assert.equal(result.ok, true);
   assert.equal(result.spam, true);
 });

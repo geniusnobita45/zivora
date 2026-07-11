@@ -1,7 +1,8 @@
-﻿import type { MetadataRoute } from "next";
+import type { MetadataRoute } from "next";
 import { caseStudyPages, marketingPages } from "@/lib/seo-pages";
 
 const siteUrl = "https://zivoraai.co.in";
+const lastModified = new Date("2026-07-11T00:00:00.000Z");
 type ChangeFrequency = NonNullable<MetadataRoute.Sitemap[number]["changeFrequency"]>;
 type PublicRoute = {
   path: string;
@@ -38,8 +39,6 @@ const publicRoutes: PublicRoute[] = [
 ];
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const lastModified = new Date();
-
   return publicRoutes.map((route) => ({
     url: new URL(route.path, siteUrl).toString(),
     lastModified,

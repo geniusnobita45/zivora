@@ -1,22 +1,22 @@
-﻿import { z } from "zod";
+import { z } from "zod";
 
 export const SERVICE_OPTIONS = [
   "AI Automation",
-  "Premium Websites",
+  "Website Development",
   "Custom AI Tools",
-  "Revenue Growth",
-  "Social Domination",
-  "Paid Acquisition",
-  "The full system â€” everything",
+  "Content & AdSense Growth",
+  "Social Media Systems",
+  "Paid Ad Funnels",
+  "Complete digital system — everything",
 ] as const;
 
 export const BUDGET_OPTIONS = [
   "",
-  "â‚¹50K â€“ â‚¹1L",
-  "â‚¹1L â€“ â‚¹3L",
-  "â‚¹3L â€“ â‚¹7L",
-  "â‚¹7L+",
-  "Help me figure it out",
+  "₹50K – ₹1L",
+  "₹1L – ₹3L",
+  "₹3L – ₹7L",
+  "₹7L+",
+  "Not sure yet — help me plan",
 ] as const;
 
 export const CONTACT_MAX_BODY_BYTES = 12_000;

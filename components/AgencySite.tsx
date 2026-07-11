@@ -2,6 +2,7 @@
 
 import dynamic from "next/dynamic";
 import Image from "next/image";
+import Link from "next/link";
 import { track } from "@vercel/analytics";
 import ownerPortrait from "../nobi.jpg";
 import {
@@ -15,11 +16,9 @@ import {
   Code2,
   ExternalLink,
   Globe2,
-  Layers3,
   Menu,
   MousePointer2,
   Play,
-  Rocket,
   Send,
   Share2,
   Target,
@@ -29,7 +28,7 @@ import {
   Zap,
 } from "lucide-react";
 import { AnimatePresence, motion, useScroll, useSpring, useTransform } from "motion/react";
-import { FormEvent, useEffect, useMemo, useRef, useState } from "react";
+import { FormEvent, useEffect, useRef, useState } from "react";
 import { ownerProfile, projects, services, site } from "@/lib/site";
 
 const HeroScene = dynamic(() => import("@/components/HeroScene"), {
@@ -172,7 +171,7 @@ function Header() {
   return (
     <header className={`site-header ${scrolled ? "is-scrolled" : ""}`}>
       <div className="nav-shell">
-        <a className="brand" href="/" aria-label="Zivora home">
+        <Link className="brand" href="/" aria-label="Zivora home">
           <Image
             src="/zivora-logo-96.webp"
             alt="Zivora Logo"
@@ -182,7 +181,7 @@ function Header() {
             priority
           />
           <span className="brand-text">{site.name}</span>
-        </a>
+        </Link>
 
         <nav className="desktop-nav" aria-label="Primary navigation">
           {site.nav.map((item) => <a key={item.href} href={item.href}>{item.label}</a>)}
@@ -206,7 +205,7 @@ function Header() {
             exit={{ opacity: 0, y: -16 }}
           >
             <div className="mobile-menu-top">
-              <a className="brand" href="/" onClick={() => setOpen(false)}>
+              <Link className="brand" href="/" onClick={() => setOpen(false)}>
                 <Image
                   src="/zivora-logo-96.webp"
                   alt="Zivora Logo"
@@ -215,7 +214,7 @@ function Header() {
                   className="brand-logo"
                 />
                 <span className="brand-text">{site.name}</span>
-              </a>
+              </Link>
               <button onClick={() => setOpen(false)} aria-label="Close menu"><X size={22} /></button>
             </div>
             <nav>
@@ -603,7 +602,7 @@ function Contact() {
           viewport={{ once: true }}
         >
           {state === "success" ? (
-            <div className="success-state">
+            <div className="success-state" role="status" aria-live="polite">
               <span><CircleCheck size={29} /></span>
               <h3>Your brief is with our team.</h3>
               <p>We&apos;re reviewing your project details now. Expect a personalized response with clear next steps within 24 hours — no generic sales pitch, guaranteed.</p>
@@ -647,11 +646,11 @@ function Contact() {
               <label><span>What&apos;s your biggest challenge right now? *</span><textarea name="message" required minLength={10} rows={5} placeholder="Tell us about the problem you want solved — slow leads, low conversions, manual processes, scaling challenges..." /></label>
               <input type="hidden" name="formStartedAt" value={formStartedAt} />
               <input className="honeypot" type="text" name="website" tabIndex={-1} autoComplete="off" aria-hidden="true" />
-              {state === "error" ? <p className="form-error">{error}</p> : null}
+              {state === "error" ? <p className="form-error" role="alert">{error}</p> : null}
               <button className="button button-primary form-submit" type="submit" disabled={state === "sending"}>
                 {state === "sending" ? "Sending..." : <>Send Project Brief <Send size={16} /></>}
               </button>
-              <p className="form-note">By submitting this form, you agree to our <a href="/privacy-policy">Privacy Policy</a> and <a href="/terms">Terms</a>.</p>
+              <p className="form-note">By submitting this form, you agree to our <Link href="/privacy-policy">Privacy Policy</Link> and <Link href="/terms">Terms</Link>.</p>
             </form>
           )}
         </motion.div>
@@ -665,7 +664,7 @@ function Footer() {
     <footer className="site-footer">
       <div className="shell footer-top">
         <div>
-          <a className="brand" href="/">
+          <Link className="brand" href="/">
             <Image
               src="/zivora-logo-96.webp"
               alt="Zivora Logo"
@@ -674,7 +673,7 @@ function Footer() {
               className="brand-logo"
             />
             <span className="brand-text">{site.name}</span>
-          </a>
+          </Link>
           <p className="footer-brand-lines">
             <strong>Zivora AI</strong>
             <a href={`https://${site.domain}`}>{site.domain}</a>
@@ -684,8 +683,8 @@ function Footer() {
         </div>
         <div className="footer-links">
           <div><small>EXPLORE</small>{site.nav.map((item) => <a href={item.href} key={item.href}>{item.label}</a>)}</div>
-          <div><small>CAPABILITIES</small><a href="/ai-automation-services">AI Automation</a><a href="/website-development">Web Development</a><a href="/ai-tools-development">AI Tools</a><a href="/adsense-growth">Content Growth</a></div>
-          <div><small>CONNECT</small><a href={`mailto:${site.email}`}>{site.email}</a>{site.phones.map((phone) => <a href={phone.href} key={phone.href}>{phone.label}</a>)}<a href={site.social.instagram} target="_blank" rel="noopener noreferrer">Instagram</a><a href={site.social.github} target="_blank" rel="noopener noreferrer">GitHub</a><a href="/privacy-policy">Privacy Policy</a><a href="/terms">Terms</a><span>{site.location}</span></div>
+          <div><small>CAPABILITIES</small><Link href="/ai-automation-services">AI Automation</Link><Link href="/website-development">Web Development</Link><Link href="/ai-tools-development">AI Tools</Link><Link href="/adsense-growth">Content Growth</Link></div>
+          <div><small>CONNECT</small><a href={`mailto:${site.email}`}>{site.email}</a>{site.phones.map((phone) => <a href={phone.href} key={phone.href}>{phone.label}</a>)}<a href={site.social.instagram} target="_blank" rel="noopener noreferrer">Instagram</a><a href={site.social.github} target="_blank" rel="noopener noreferrer">GitHub</a><Link href="/privacy-policy">Privacy Policy</Link><Link href="/terms">Terms</Link><span>{site.location}</span></div>
         </div>
       </div>
       <div className="shell footer-bottom">
