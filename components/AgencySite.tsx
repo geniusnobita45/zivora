@@ -98,25 +98,48 @@ function LazyHeroScene() {
   const probeRef = useRef<HTMLDivElement>(null);
   const [mounted, setMounted] = useState(false);
   const [active, setActive] = useState(false);
+  const scheduledRef = useRef(false);
 
   useEffect(() => {
     const node = probeRef.current;
+    let delayTimer: number | undefined;
+    let idleId: number | undefined;
+
+    const scheduleMount = () => {
+      if (scheduledRef.current) return;
+      scheduledRef.current = true;
+      delayTimer = window.setTimeout(() => {
+        if ("requestIdleCallback" in window) {
+          idleId = window.requestIdleCallback(() => setMounted(true), { timeout: 1400 });
+        } else {
+          setMounted(true);
+        }
+      }, 2200);
+    };
+
     if (!node || !("IntersectionObserver" in window)) {
-      setMounted(true);
       setActive(true);
-      return;
+      scheduleMount();
+      return () => {
+        if (delayTimer) window.clearTimeout(delayTimer);
+        if (idleId && "cancelIdleCallback" in window) window.cancelIdleCallback(idleId);
+      };
     }
 
     const observer = new IntersectionObserver(
       ([entry]) => {
-        if (entry.isIntersecting) setMounted(true);
         setActive(entry.isIntersecting);
+        if (entry.isIntersecting) scheduleMount();
       },
-      { rootMargin: "360px 0px" },
+      { rootMargin: "120px 0px" },
     );
 
     observer.observe(node);
-    return () => observer.disconnect();
+    return () => {
+      observer.disconnect();
+      if (delayTimer) window.clearTimeout(delayTimer);
+      if (idleId && "cancelIdleCallback" in window) window.cancelIdleCallback(idleId);
+    };
   }, []);
 
   return (
@@ -130,7 +153,6 @@ function LazyHeroScene() {
     </>
   );
 }
-
 function Header() {
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
@@ -147,7 +169,7 @@ function Header() {
       <div className="nav-shell">
         <a className="brand" href="/" aria-label="Zivora home">
           <Image
-            src="/zivora-logo.jpg"
+            src="/zivora-logo-96.webp"
             alt="Zivora Logo"
             width={190}
             height={62}
@@ -181,7 +203,7 @@ function Header() {
             <div className="mobile-menu-top">
               <a className="brand" href="/" onClick={() => setOpen(false)}>
                 <Image
-                  src="/zivora-logo.jpg"
+                  src="/zivora-logo-96.webp"
                   alt="Zivora Logo"
                   width={170}
               height={56}
@@ -218,12 +240,8 @@ function Hero() {
       <div className="hero-glow hero-glow-two" aria-hidden="true" />
 
       <div className="hero-content shell">
-        <motion.div
-          className="hero-copy"
-          initial={{ opacity: 0, y: 24 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-        >
+        <div className="hero-copy">
+
           <div className="status-pill">
             <span className="status-dot" />
             AI Automation · Digital Products · Growth Systems
@@ -257,7 +275,7 @@ function Hero() {
             <span><strong>360°</strong> growth engine</span>
             <span><strong>24/7</strong> automation</span>
           </div>
-        </motion.div>
+        </div>
 
         <motion.div className="hero-visual" style={{ y: orbY, opacity: orbOpacity }}>
           <LazyHeroScene />
@@ -725,7 +743,7 @@ function Footer() {
         <div>
           <a className="brand" href="/">
             <Image
-              src="/zivora-logo.jpg"
+              src="/zivora-logo-96.webp"
               alt="Zivora Logo"
               width={170}
               height={56}

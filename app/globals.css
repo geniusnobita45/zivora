@@ -3952,3 +3952,35 @@ input, select, textarea,
   .content-hero h1 { font-size: 28px; }
   .content-hero p { font-size: 14px; }
 }
+
+/* Performance: avoid render-blocking external font requests */
+:root {
+  --font-heading: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --font-body: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --font-ui: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
+.hero {
+  min-height: 860px;
+  padding-top: 112px;
+}
+
+.hero-content {
+  min-height: 650px;
+}
+
+.hero-visual {
+  min-height: 620px;
+}
+
+@media (max-width: 820px) {
+  .hero {
+    min-height: auto;
+    padding-top: 104px;
+  }
+
+  .hero-content,
+  .hero-visual {
+    min-height: auto;
+  }
+}
