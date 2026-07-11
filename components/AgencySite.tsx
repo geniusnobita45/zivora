@@ -30,7 +30,7 @@ import {
 } from "lucide-react";
 import { AnimatePresence, motion, useScroll, useSpring, useTransform } from "motion/react";
 import { FormEvent, useEffect, useMemo, useRef, useState } from "react";
-import { ownerProfile, processSteps, services, site, systemCards } from "@/lib/site";
+import { ownerProfile, projects, services, site } from "@/lib/site";
 
 const HeroScene = dynamic(() => import("@/components/HeroScene"), {
   ssr: false,
@@ -183,8 +183,8 @@ function Header() {
           {site.nav.map((item) => <a key={item.href} href={item.href}>{item.label}</a>)}
         </nav>
 
-        <a className="nav-cta" href="/contact">
-          Start a project <ArrowRight size={15} />
+        <a className="nav-cta" href="#contact">
+          Contact <ArrowRight size={15} />
         </a>
 
         <button className="menu-button" onClick={() => setOpen(true)} aria-label="Open menu">
@@ -390,127 +390,52 @@ function Services() {
   );
 }
 
-function OperatingSystem() {
-  const [active, setActive] = useState(1);
-  const nodes = useMemo(() => [
-    { icon: Globe2, label: "Traffic", x: "4%", y: "48%" },
-    { icon: BrainCircuit, label: "AI Layer", x: "27%", y: "18%" },
-    { icon: Workflow, label: "Automation", x: "27%", y: "72%" },
-    { icon: Layers3, label: "Your Business", x: "50%", y: "45%", core: true },
-    { icon: ChartNoAxesCombined, label: "Analytics", x: "73%", y: "18%" },
-    { icon: Share2, label: "Content", x: "73%", y: "72%" },
-    { icon: Rocket, label: "Growth", x: "93%", y: "48%" },
-  ], []);
-
+function AboutUs() {
   return (
-    <section className="section os-section" id="systems">
-      <div className="shell">
-        <SectionHeading
-          eyebrow="THE CONNECTED ADVANTAGE"
-          title={<>Not another vendor.<br /><span className="gradient-text">Your business operating system.</span></>}
-          copy="Most businesses run on disconnected tools and hope. We replace the chaos with one intelligent system where every part talks to every other part — automatically."
-        />
-
-        <motion.div
-          className="system-map"
-          initial={{ opacity: 0, scale: 0.96 }}
-          whileInView={{ opacity: 1, scale: 1 }}
-          viewport={{ once: true, margin: "-80px" }}
-          transition={{ duration: 0.8 }}
-        >
-          <div className="map-grid" />
-          <svg className="map-lines" viewBox="0 0 1000 430" preserveAspectRatio="none" aria-hidden="true">
-            <defs>
-              <linearGradient id="lineGlow" x1="0" x2="1">
-                <stop offset="0" stopColor="#3b82f6" stopOpacity="0.15" />
-                <stop offset="0.5" stopColor="#8b5cf6" stopOpacity="0.8" />
-                <stop offset="1" stopColor="#22d3ee" stopOpacity="0.15" />
-              </linearGradient>
-            </defs>
-            <path d="M65 215 C170 215 205 78 315 78" />
-            <path d="M65 215 C170 215 205 335 315 335" />
-            <path d="M315 78 C405 78 420 215 500 215" />
-            <path d="M315 335 C405 335 420 215 500 215" />
-            <path d="M500 215 C585 215 600 78 730 78" />
-            <path d="M500 215 C585 215 600 335 730 335" />
-            <path d="M730 78 C815 78 835 215 930 215" />
-            <path d="M730 335 C815 335 835 215 930 215" />
-          </svg>
-          {nodes.map((node, index) => {
-            const Icon = node.icon;
-            return (
-              <motion.button
-                type="button"
-                key={node.label}
-                className={`map-node ${node.core ? "core-node" : ""} ${active === index ? "active" : ""}`}
-                style={{ left: node.x, top: node.y }}
-                onMouseEnter={() => setActive(index)}
-                onFocus={() => setActive(index)}
-                whileHover={{ scale: 1.06 }}
-              >
-                <span><Icon size={node.core ? 26 : 20} /></span>
-                <small>{node.label}</small>
-              </motion.button>
-            );
-          })}
-          <div className="map-status">
-            <span className="status-dot" />
-            <div><small>SYSTEM PULSE</small><strong>{nodes[active].label} connected</strong></div>
-          </div>
-        </motion.div>
-
-        <div className="system-cards">
-          {systemCards.map((card, index) => (
-            <motion.article
-              key={card.title}
-              className={`system-card ${card.className}`}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: index * 0.09 }}
-            >
-              <div className="system-card-light" />
-              <span className="system-eyebrow">{card.eyebrow}</span>
-              <h3>{card.title}</h3>
-              <p>{card.description}</p>
-              <div className="metric-list">
-                {card.metrics.map((metric) => <span key={metric}><Check size={13} />{metric}</span>)}
-              </div>
-            </motion.article>
-          ))}
+    <section className="section about-section" id="about">
+      <div className="shell about-layout">
+        <div>
+          <div className="eyebrow"><span />ABOUT US</div>
+          <h2>Zivora AI builds simple digital systems that make business work easier.</h2>
+        </div>
+        <div className="about-copy">
+          <p>
+            We help businesses turn scattered websites, leads, content, and manual follow-ups into one clear workflow. The goal is not to add more noise. The goal is to build the pages, automations, AI tools, and contact flows your team can actually use.
+          </p>
+          <p>
+            Start with one problem: a weak website, slow lead response, repeated admin work, or an AI tool idea. We map it, build it, connect it, and keep the system understandable after launch.
+          </p>
         </div>
       </div>
     </section>
   );
 }
 
-function Process() {
+function Projects() {
   return (
-    <section className="section process-section" id="process">
-      <div className="shell process-layout">
-        <div className="process-sticky">
+    <section className="section projects-section" id="projects">
+      <div className="shell">
+        <div className="projects-top">
           <SectionHeading
-            eyebrow="HOW WE WORK"
-            title={<>We don&apos;t guess.<br /><span className="gradient-text">We engineer.</span></>}
-            copy="Every dollar you invest should be trackable, every system we build should be measurable. Here's how we make that happen."
+            eyebrow="PROJECTS"
+            title={<>Selected work and <span className="muted-heading">project links.</span></>}
+            copy="A small section for actual work, not random decoration. More project links can be added here from your portfolio when you share the portfolio URL."
           />
-          <a className="text-link" href="/contact">Talk to our team <ArrowRight size={16} /></a>
+          <a className="text-link" href={ownerProfile.portfolioUrl} target="_blank" rel="noopener noreferrer">
+            Open portfolio <ExternalLink size={16} />
+          </a>
         </div>
 
-        <div className="process-list">
-          {processSteps.map((item, index) => (
-            <motion.article
-              className="process-item"
-              key={item.step}
-              initial={{ opacity: 0, x: 24 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true, margin: "-80px" }}
-              transition={{ duration: 0.55, delay: index * 0.08 }}
-            >
-              <div className="process-index">{item.step}</div>
-              <div className="process-copy"><h3>{item.title}</h3><p>{item.text}</p></div>
-              <div className="process-dot" />
-            </motion.article>
+        <div className="program-grid project-link-grid">
+          {projects.map((project) => (
+            <a className="program-card" href={project.href} key={project.title} target={project.href.startsWith("http") ? "_blank" : undefined} rel={project.href.startsWith("http") ? "noopener noreferrer" : undefined}>
+              <div className="program-card-top"><span>{project.number}</span><ExternalLink size={16} /></div>
+              <h3>{project.title}</h3>
+              <p>{project.description}</p>
+              <div className="service-tags">
+                {project.tags.map((tag) => <span key={tag}>{tag}</span>)}
+              </div>
+            </a>
           ))}
         </div>
       </div>
@@ -568,35 +493,6 @@ function Owner() {
     </section>
   );
 }
-function Industries() {
-  const industries = ["Clinics & hospitals", "Local service businesses", "Creators & media brands", "Startups & SaaS", "E-commerce brands", "Coaches & educators"];
-  return (
-    <section className="section industries-section">
-      <div className="shell">
-        <div className="industries-panel">
-          <div>
-            <div className="eyebrow"><span />WHO WE WORK WITH</div>
-            <h2>Different industry.<br /><span className="muted-heading">Same hunger for growth.</span></h2>
-          </div>
-          <div className="industry-list">
-            {industries.map((industry, index) => (
-              <motion.div
-                key={industry}
-                initial={{ opacity: 0, x: 18 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: index * 0.05 }}
-              >
-                <span>0{index + 1}</span><strong>{industry}</strong><ArrowRight size={16} />
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </div>
-    </section>
-  );
-}
-
 function Contact() {
   const [state, setState] = useState<"idle" | "sending" | "success" | "error">("idle");
   const [error, setError] = useState("");
@@ -760,7 +656,7 @@ function Footer() {
           </p>
         </div>
         <div className="footer-links">
-          <div><small>EXPLORE</small>{site.nav.map((item) => <a href={item.href} key={item.href}>{item.label}</a>)}<a href="/about">About</a></div>
+          <div><small>EXPLORE</small>{site.nav.map((item) => <a href={item.href} key={item.href}>{item.label}</a>)}</div>
           <div><small>CAPABILITIES</small><a href="/ai-automation-services">Automation</a><a href="/website-development">Web experiences</a><a href="/ai-tools-development">AI tools</a><a href="/adsense-growth">Revenue growth</a></div>
           <div><small>CONTACT</small><a href={`mailto:${site.email}`}>{site.email}</a>{site.phones.map((phone) => <a href={phone.href} key={phone.href}>{phone.label}</a>)}<a href={site.social.instagram} target="_blank" rel="noopener noreferrer">Instagram</a><a href={site.social.github} target="_blank" rel="noopener noreferrer">GitHub</a><a href="/privacy-policy">Privacy Policy</a><a href="/terms">Terms</a><span>{site.location}</span></div>
         </div>
@@ -784,12 +680,10 @@ export function AgencySite() {
       <Header />
       <main>
         <Hero />
-        <SignalStrip />
+        <AboutUs />
         <Services />
-        <OperatingSystem />
-        <Process />
         <Owner />
-        <Industries />
+        <Projects />
         <Contact />
       </main>
       <Footer />

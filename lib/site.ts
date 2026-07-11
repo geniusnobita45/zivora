@@ -15,10 +15,12 @@
     github: "https://github.com/geniusnobita45",
   },
   nav: [
-    { label: "Services", href: "/ai-automation-services" },
-    { label: "Clinics", href: "/ai-automation-for-clinics" },
-    { label: "Case Study", href: "/case-studies/nobi-ai-assistant" },
-    { label: "Contact", href: "/contact" },
+    { label: "Home", href: "#top" },
+    { label: "About Us", href: "#about" },
+    { label: "Services", href: "#services" },
+    { label: "Owner", href: "#owner" },
+    { label: "Projects", href: "#projects" },
+    { label: "Contact", href: "#contact" },
   ],
 } as const;
 
@@ -79,6 +81,23 @@ export const services = [
   },
 ] as const;
 
+
+export const projects = [
+  {
+    number: "01",
+    title: "NOBI AI Assistant",
+    href: "/case-studies/nobi-ai-assistant",
+    description: "A practical AI assistant case study showing reasoning, browser workflows, automation actions, and how that thinking can become client-ready systems.",
+    tags: ["AI Assistant", "Automation", "Case Study"],
+  },
+  {
+    number: "02",
+    title: "Aryan's Project Portfolio",
+    href: "https://github.com/geniusnobita45?tab=repositories",
+    description: "Explore the public project repository list behind Aryan's AI, web, automation, and product experiments.",
+    tags: ["Portfolio", "GitHub", "Projects"],
+  },
+] as const;
 export const systemCards = [
   {
     eyebrow: "CAPTURE",
@@ -113,7 +132,7 @@ export const processSteps = [
 export const ownerProfile = {
   name: "Aryan Sharma",
   role: "Owner of Zivora · AI Automation Engineer",
-  portfolioUrl: "https://zivoraai.co.in/#owner",
+  portfolioUrl: "https://github.com/geniusnobita45",
   summary: "Aryan builds AI-powered products, automation systems, machine-learning workflows, and premium full-stack experiences. Zivora turns that builder mindset into client work: clear websites, practical automations, useful AI tools, and growth systems that can be operated after launch.",
   highlights: ["AI automation engineer", "Full-stack product builder", "Generative AI and workflow systems", "Premium web experiences"],
   stats: [
