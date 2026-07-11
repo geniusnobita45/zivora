@@ -244,21 +244,22 @@ function Hero() {
 
           <div className="status-pill">
             <span className="status-dot" />
-            AI Automation · Digital Products · Growth Systems
+            Websites · AI Automation · Lead Systems
           </div>
           <h1>Zivora AI — Automate. Innovate. Scale.</h1>
           <p className="hero-lead">
             Zivora AI is an AI automation and digital growth agency that builds
-            smart workflows, premium websites, custom AI tools, and performance
-            systems for Indian businesses ready to scale.
+            client-ready websites, lead follow-up systems, custom AI tools, and
+            content workflows for businesses that want fewer manual tasks and
+            clearer growth.
           </p>
           <div className="hero-actions">
             <a className="button button-primary" href="/contact" onClick={() => track("hero_cta_clicked")}>
-              Let&apos;s build yours <ArrowRight size={17} />
+              Start with my workflow <ArrowRight size={17} />
             </a>
             <a className="button button-ghost" href="#services">
               <span className="play-icon"><Play size={13} fill="currentColor" /></span>
-              See what we build
+              View services
             </a>
           </div>
           <div className="hero-proof">
@@ -266,14 +267,14 @@ function Hero() {
               <span>AI</span><span>3D</span><span>8</span>
             </div>
             <div>
-              <strong>Strategy ? Build ? Scale</strong>
-              <p>One team. Every digital system you need.</p>
+              <strong>Map. Build. Connect.</strong>
+              <p>Web pages, automations, AI tools, and follow-up in one plan.</p>
             </div>
           </div>
           <div className="hero-metrics" aria-label="Zivora capabilities">
-            <span><strong>6 sec</strong> lead response</span>
-            <span><strong>360°</strong> growth engine</span>
-            <span><strong>24/7</strong> automation</span>
+            <span><strong>Fast</strong> lead response</span>
+            <span><strong>Clear</strong> service pages</span>
+            <span><strong>Less</strong> manual work</span>
           </div>
         </div>
 
@@ -285,7 +286,7 @@ function Hero() {
             transition={{ duration: 4.6, repeat: Infinity, ease: "easeInOut" }}
           >
             <span className="floating-icon"><Workflow size={16} /></span>
-            <div><small>WORKFLOW</small><strong>Lead follow-up active</strong></div>
+            <div><small>WORKFLOW</small><strong>New enquiry assigned</strong></div>
             <span className="live-chip">LIVE</span>
           </motion.div>
           <motion.div
@@ -294,22 +295,22 @@ function Hero() {
             transition={{ duration: 5.2, repeat: Infinity, ease: "easeInOut" }}
           >
             <span className="floating-icon cyan"><Zap size={16} /></span>
-            <div><small>SYSTEM STATUS</small><strong>6 processes connected</strong></div>
+            <div><small>SYSTEM STATUS</small><strong>Forms, CRM, follow-up connected</strong></div>
             <CircleCheck size={18} className="success-icon" />
           </motion.div>
-          <div className="orbit-label orbit-label-one">AUTOMATE</div>
-          <div className="orbit-label orbit-label-two">INNOVATE</div>
-          <div className="orbit-label orbit-label-three">ELEVATE</div>
+          <div className="orbit-label orbit-label-one">CAPTURE</div>
+          <div className="orbit-label orbit-label-two">FOLLOW UP</div>
+          <div className="orbit-label orbit-label-three">CONVERT</div>
         </motion.div>
       </div>
 
       <div className="hero-footer shell">
         <div className="scroll-cue"><MousePointer2 size={15} /><span>Scroll to explore</span></div>
         <div className="capability-line">
-          <span>AI AUTOMATION</span><i />
-          <span>FULL-STACK WEB</span><i />
-          <span>GROWTH SYSTEMS</span><i />
-          <span>SOCIAL OPERATIONS</span>
+          <span>LEAD AUTOMATION</span><i />
+          <span>SERVICE PAGES</span><i />
+          <span>AI TOOLS</span><i />
+          <span>CONTENT SYSTEMS</span>
         </div>
       </div>
     </section>
@@ -318,10 +319,10 @@ function Hero() {
 
 function SignalStrip() {
   const signals = [
-    { value: "24/7", label: "systems that work while you sleep" },
-    { value: "01", label: "partner for everything digital" },
-    { value: "8", label: "unlimited scale, zero bottlenecks" },
-    { value: "360°", label: "first impression to final sale" },
+    { value: "01", label: "clear workflow before build" },
+    { value: "02", label: "website and automation connected" },
+    { value: "03", label: "lead follow-up made visible" },
+    { value: "04", label: "content and ads tied to enquiries" },
   ];
   return (
     <section className="signal-strip">
@@ -350,8 +351,8 @@ function Services() {
       <div className="shell">
         <SectionHeading
           eyebrow="WHAT WE BUILD"
-          title={<>One agency. <span className="muted-heading">Every growth lever.</span></>}
-          copy="Most agencies sell you one piece. We build the entire machine — website, automation, AI, content, and ads — all wired together so nothing falls through the cracks."
+          title={<>Client-ready systems. <span className="muted-heading">Not random services.</span></>}
+          copy="Choose the part your business needs first: a clearer website, faster lead follow-up, a useful AI tool, content workflows, or an ad funnel that sends enquiries to the right place."
         />
 
         <div className="service-grid">
