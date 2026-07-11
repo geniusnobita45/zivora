@@ -393,18 +393,41 @@ function Services() {
 function AboutUs() {
   return (
     <section className="section about-section" id="about">
+      <div className="about-liquid-bg" aria-hidden="true" />
       <div className="shell about-layout">
-        <div>
+        <div className="about-heading-panel">
           <div className="eyebrow"><span />ABOUT US</div>
           <h2>Zivora AI builds simple digital systems that make business work easier.</h2>
+          <div className="about-mini-stats" aria-label="Zivora working style">
+            <span><strong>01</strong> Map</span>
+            <span><strong>02</strong> Build</span>
+            <span><strong>03</strong> Connect</span>
+          </div>
         </div>
-        <div className="about-copy">
-          <p>
-            We help businesses turn scattered websites, leads, content, and manual follow-ups into one clear workflow. The goal is not to add more noise. The goal is to build the pages, automations, AI tools, and contact flows your team can actually use.
-          </p>
-          <p>
-            Start with one problem: a weak website, slow lead response, repeated admin work, or an AI tool idea. We map it, build it, connect it, and keep the system understandable after launch.
-          </p>
+
+        <div className="about-showcase">
+          <div className="about-copy about-glass-copy">
+            <p>
+              We help businesses turn scattered websites, leads, content, and manual follow-ups into one clear workflow. The goal is not to add more noise. The goal is to build the pages, automations, AI tools, and contact flows your team can actually use.
+            </p>
+            <p>
+              Start with one problem: a weak website, slow lead response, repeated admin work, or an AI tool idea. We map it, build it, connect it, and keep the system understandable after launch.
+            </p>
+          </div>
+
+          <div className="liquid-system-visual" aria-hidden="true">
+            <div className="liquid-core">
+              <span className="core-ring core-ring-one" />
+              <span className="core-ring core-ring-two" />
+              <span className="core-sphere" />
+            </div>
+            <div className="liquid-node node-web"><Globe2 size={18} /><span>Website</span></div>
+            <div className="liquid-node node-ai"><BrainCircuit size={18} /><span>AI Tool</span></div>
+            <div className="liquid-node node-flow"><Workflow size={18} /><span>Follow-up</span></div>
+            <div className="liquid-node node-growth"><ChartNoAxesCombined size={18} /><span>Growth</span></div>
+            <div className="liquid-beam beam-one" />
+            <div className="liquid-beam beam-two" />
+          </div>
         </div>
       </div>
     </section>
