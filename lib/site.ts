@@ -93,8 +93,8 @@ export const projects = [
   {
     number: "02",
     title: "Aryan's Project Portfolio",
-    href: "https://github.com/geniusnobita45?tab=repositories",
-    description: "Explore the full repository of AI experiments, web products, automation frameworks, and open-source tools built by Zivora's founder.",
+    href: "https://portfolio-backend-7kau.onrender.com",
+    description: "Explore the deployed portfolio of AI experiments, web products, automation frameworks, and open-source tools built by Zivora's founder.",
     tags: ["Portfolio", "Open Source", "AI & Web"],
   },
 ] as const;
@@ -133,7 +133,7 @@ export const processSteps = [
 export const ownerProfile = {
   name: "Aryan Sharma",
   role: "Founder of Zivora AI · AI Automation Engineer",
-  portfolioUrl: "https://github.com/geniusnobita45",
+  portfolioUrl: "https://portfolio-backend-7kau.onrender.com",
   summary: "Aryan is an AI automation engineer and full-stack builder who has developed 20+ AI-powered products, automation systems, and premium web experiences. At Zivora, he channels that deep technical expertise into building real business systems — websites that convert, automations that save hours, and AI tools that give teams superpowers.",
   highlights: ["AI & automation specialist", "Full-stack product architect", "Generative AI systems builder", "Premium web experience designer"],
   stats: [
