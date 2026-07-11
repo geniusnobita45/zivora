@@ -145,7 +145,7 @@ function Header() {
   return (
     <header className={`site-header ${scrolled ? "is-scrolled" : ""}`}>
       <div className="nav-shell">
-        <a className="brand" href="#top" aria-label="Zivora home">
+        <a className="brand" href="/" aria-label="Zivora home">
           <Image
             src="/zivora-logo.jpg"
             alt="Zivora Logo"
@@ -161,7 +161,7 @@ function Header() {
           {site.nav.map((item) => <a key={item.href} href={item.href}>{item.label}</a>)}
         </nav>
 
-        <a className="nav-cta" href="#contact">
+        <a className="nav-cta" href="/contact">
           Start a project <ArrowRight size={15} />
         </a>
 
@@ -179,7 +179,7 @@ function Header() {
             exit={{ opacity: 0, y: -16 }}
           >
             <div className="mobile-menu-top">
-              <a className="brand" href="#top" onClick={() => setOpen(false)}>
+              <a className="brand" href="/" onClick={() => setOpen(false)}>
                 <Image
                   src="/zivora-logo.jpg"
                   alt="Zivora Logo"
@@ -228,17 +228,14 @@ function Hero() {
             <span className="status-dot" />
             AI Automation · Digital Products · Growth Systems
           </div>
-          <h1>
-            Your business<br />
-            should <span className="gradient-text">run itself.</span>
-          </h1>
+          <h1>Zivora AI — Automate. Innovate. Scale.</h1>
           <p className="hero-lead">
-            While you focus on the vision, we build the machine behind it —
-            AI automation, stunning websites, and growth systems that generate
-            leads, close deals, and scale revenue on autopilot.
+            Zivora AI is an AI automation and digital growth agency that builds
+            smart workflows, premium websites, custom AI tools, and performance
+            systems for Indian businesses ready to scale.
           </p>
           <div className="hero-actions">
-            <a className="button button-primary" href="#contact" onClick={() => track("hero_cta_clicked")}>
+            <a className="button button-primary" href="/contact" onClick={() => track("hero_cta_clicked")}>
               Let&apos;s build yours <ArrowRight size={17} />
             </a>
             <a className="button button-ghost" href="#services">
@@ -343,7 +340,8 @@ function Services() {
           {services.map((service, index) => {
             const Icon = iconMap[service.icon];
             return (
-              <motion.article
+              <motion.a
+                href={service.href}
                 className="service-card"
                 key={service.title}
                 initial={{ opacity: 0, y: 28 }}
@@ -364,7 +362,7 @@ function Services() {
                   {service.tags.map((tag) => <span key={tag}>{tag}</span>)}
                 </div>
                 <div className="service-arrow"><ArrowRight size={18} /></div>
-              </motion.article>
+              </motion.a>
             );
           })}
         </div>
@@ -477,7 +475,7 @@ function Process() {
             title={<>We don&apos;t guess.<br /><span className="gradient-text">We engineer.</span></>}
             copy="Every dollar you invest should be trackable, every system we build should be measurable. Here's how we make that happen."
           />
-          <a className="text-link" href="#contact">Talk to our team <ArrowRight size={16} /></a>
+          <a className="text-link" href="/contact">Talk to our team <ArrowRight size={16} /></a>
         </div>
 
         <div className="process-list">
@@ -696,10 +694,10 @@ function Contact() {
                   <span>Budget range</span>
                   <select name="budget" defaultValue="">
                     <option value="">Select a range</option>
-                    <option>₹50K – ₹1L</option>
-                    <option>₹1L – ₹3L</option>
-                    <option>₹3L – ₹7L</option>
-                    <option>₹7L+</option>
+                    <option>?50K – ?1L</option>
+                    <option>?1L – ?3L</option>
+                    <option>?3L – ?7L</option>
+                    <option>?7L+</option>
                     <option>Help me figure it out</option>
                   </select>
                 </label>
@@ -725,7 +723,7 @@ function Footer() {
     <footer className="site-footer">
       <div className="shell footer-top">
         <div>
-          <a className="brand" href="#top">
+          <a className="brand" href="/">
             <Image
               src="/zivora-logo.jpg"
               alt="Zivora Logo"
@@ -735,17 +733,22 @@ function Footer() {
             />
             <span className="brand-text">{site.name}</span>
           </a>
-          <p>{site.descriptor}</p>
+          <p className="footer-brand-lines">
+            <strong>Zivora AI</strong>
+            <a href={`https://${site.domain}`}>{site.domain}</a>
+            <a href={`mailto:${site.email}`}>{site.email}</a>
+            <span>India</span>
+          </p>
         </div>
         <div className="footer-links">
-          <div><small>EXPLORE</small>{site.nav.map((item) => <a href={item.href} key={item.href}>{item.label}</a>)}</div>
-          <div><small>CAPABILITIES</small><a href="#services">Automation</a><a href="#services">Web experiences</a><a href="#services">AI tools</a><a href="#services">Revenue growth</a></div>
+          <div><small>EXPLORE</small>{site.nav.map((item) => <a href={item.href} key={item.href}>{item.label}</a>)}<a href="/about">About</a></div>
+          <div><small>CAPABILITIES</small><a href="/ai-automation-services">Automation</a><a href="/website-development">Web experiences</a><a href="/ai-tools-development">AI tools</a><a href="/adsense-growth">Revenue growth</a></div>
           <div><small>CONTACT</small><a href={`mailto:${site.email}`}>{site.email}</a>{site.phones.map((phone) => <a href={phone.href} key={phone.href}>{phone.label}</a>)}<a href={site.social.instagram} target="_blank" rel="noopener noreferrer">Instagram</a><a href={site.social.github} target="_blank" rel="noopener noreferrer">GitHub</a><a href="/privacy-policy">Privacy Policy</a><a href="/terms">Terms</a><span>{site.location}</span></div>
         </div>
       </div>
       <div className="shell footer-bottom">
         <span>© {new Date().getFullYear()} {site.name}. All rights reserved.</span>
-        <span>Automate · Innovate · Elevate</span>
+        <span>Automate · Innovate · Scale</span>
       </div>
     </footer>
   );
