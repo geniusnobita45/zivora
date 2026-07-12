@@ -14,6 +14,10 @@ import {
 
 export const dynamic = "force-dynamic";
 
+function describeError(error: unknown) {
+  return error instanceof Error ? `${error.name}: ${error.message}` : String(error);
+}
+
 export async function POST(request: Request) {
   try {
     const originError = rejectInvalidOrigin(request);
@@ -61,7 +65,7 @@ export async function POST(request: Request) {
     if (error instanceof ConfigurationError) {
       console.error("Lead submission configuration error:", error.message);
     } else {
-      console.error("Lead submission failed.");
+      console.error("Lead submission failed:", describeError(error));
     }
     return jsonNoStore({ ok: false, error: "Something went wrong. Please try again." }, { status: 500 });
   }

@@ -1,10 +1,14 @@
-﻿import { NextResponse } from "next/server";
+import { NextResponse } from "next/server";
 import { createAdminSession, SESSION_COOKIE, SESSION_MAX_AGE_SECONDS, validPassword } from "@/lib/auth";
 import { ConfigurationError } from "@/lib/errors";
 import { rateLimit } from "@/lib/rate-limit";
 import { isFormRequest, methodNotAllowed, readLimitedText, rejectInvalidOrigin } from "@/lib/request-security";
 
 const LOGIN_MAX_BODY_BYTES = 2_048;
+
+function describeError(error: unknown) {
+  return error instanceof Error ? `${error.name}: ${error.message}` : String(error);
+}
 
 function redirectToAdmin(request: Request, error = false) {
   const url = new URL("/admin", request.url);
@@ -71,7 +75,7 @@ export async function POST(request: Request) {
     if (error instanceof ConfigurationError || (error instanceof Error && error.name === "ConfigurationError")) {
       console.error("Admin login configuration error:", error.message);
     } else {
-      console.error("Admin login failed.");
+      console.error("Admin login failed:", describeError(error));
     }
     return invalidCredentials(request);
   }
