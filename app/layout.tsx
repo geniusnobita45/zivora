@@ -37,8 +37,12 @@ export const metadata: Metadata = {
     canonical: siteUrl,
   },
   icons: {
-    icon: "/icon.png",
-    apple: "/icon.png",
+    icon: [
+      { url: "/favicon.png", type: "image/png", sizes: "512x512" },
+      { url: "/icon.png", type: "image/png", sizes: "512x512" },
+    ],
+    shortcut: "/favicon.png",
+    apple: [{ url: "/apple-touch-icon.png", type: "image/png", sizes: "512x512" }],
   },
   openGraph: {
     title: siteTitle,
@@ -62,7 +66,7 @@ const organizationJsonLd = {
   "@type": "Organization",
   name: site.name,
   url: siteUrl,
-  logo: `${siteUrl}/icon.png`,
+  logo: `${siteUrl}/favicon.png`,
   email: site.email,
   sameAs: [site.social.instagram, site.social.github],
 };
